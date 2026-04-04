@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"import torch; print\\(torch.cuda.get_device_name\\(0\\) if torch.cuda.is_available\\(\\) else ''CPU only''\\); print\\(torch.cuda.get_device_properties\\(0\\).total_memory // 1024**3 if torch.cuda.is_available\\(\\) else ''N/A'', ''GB VRAM''\\)\")",
+      "Bash(python3 -c \"import torch; print\\(torch.cuda.get_device_name\\(0\\) if torch.cuda.is_available\\(\\) else ''CPU only''\\); print\\(torch.cuda.get_device_properties\\(0\\).total_memory // 1024**3 if torch.cuda.is_available\\(\\) else ''N/A'', ''GB VRAM''\\)\")",
+      "Bash(pip list:*)",
+      "Bash(ollama list:*)",
+      "Bash(python -c \"import os; print\\(''CPU cores:'', os.cpu_count\\(\\)\\)\")",
+      "Bash(nvidia-smi)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(pip install:*)"
+    ]
+  }
+}
