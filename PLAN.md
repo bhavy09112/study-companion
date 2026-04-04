@@ -11,7 +11,7 @@
 | Disk | 127 GB available |
 | CUDA | 13.2 (driver 595.79) |
 | Ollama | Installed (mistral, llama3, qwen2.5, deepseek-r1:14b) |
-| PyTorch | 2.10.0 (CPU-only — needs CUDA reinstall) |
+| PyTorch | 2.11.0+cu126 (CUDA enabled) |
 
 ## Hardware-Tier Decision Table
 
@@ -34,68 +34,68 @@
 ## Component Checklist
 
 ### Phase 1 — Setup
-- [ ] PLAN.md created
-- [ ] Git repo initialized
-- [ ] Directory structure created
-- [ ] Dependencies installed (all 6 groups)
-- [ ] Critical imports verified
+- [x] PLAN.md created
+- [x] Git repo initialized
+- [x] Directory structure created
+- [x] Dependencies installed (all 6 groups)
+- [x] Critical imports verified
 
 ### Phase 2 — Data Pipeline
-- [ ] pipeline/ingest.py — multi-format ingestion
-- [ ] pipeline/clean.py — text normalization
-- [ ] pipeline/chunk.py — semantic chunking
-- [ ] pipeline/generate_dataset.py — instruction-response pairs
-- [ ] pipeline/embed.py — FAISS + BM25 index
-- [ ] pipeline/quality.py — dataset quality scorer
+- [x] pipeline/ingest.py — multi-format ingestion
+- [x] pipeline/clean.py — text normalization
+- [x] pipeline/chunk.py — semantic chunking
+- [x] pipeline/generate_dataset.py — instruction-response pairs
+- [x] pipeline/embed.py — FAISS + BM25 index
+- [x] pipeline/quality.py — dataset quality scorer
 
 ### Phase 3 — Training Pipeline
-- [ ] training/configs/lora_config.yaml
-- [ ] training/configs/training_config.yaml
-- [ ] training/train.py — LoRA fine-tuning
-- [ ] training/evaluate.py — BLEU/ROUGE/BERTScore
-- [ ] training/export.py — merge + GGUF export
+- [x] training/configs/lora_config.yaml
+- [x] training/configs/training_config.yaml
+- [x] training/train.py — LoRA fine-tuning
+- [x] training/evaluate.py — BLEU/ROUGE/BERTScore
+- [x] training/export.py — merge + GGUF export
 
 ### Phase 4 — Inference Layer
-- [ ] inference/engine.py — model load + generation
-- [ ] inference/rag.py — hybrid retrieval
-- [ ] inference/formatter.py — domain-aware output
+- [x] inference/engine.py — model load + generation
+- [x] inference/rag.py — hybrid retrieval
+- [x] inference/formatter.py — domain-aware output
 
 ### Phase 5 — API
-- [ ] api/schemas.py — Pydantic models
-- [ ] api/main.py — FastAPI endpoints
+- [x] api/schemas.py — Pydantic models
+- [x] api/main.py — FastAPI endpoints
 
 ### Phase 6 — Spaced Repetition
-- [ ] srs/db.py — SQLite schema
-- [ ] srs/scheduler.py — SM-2 algorithm
-- [ ] srs/flashcard_export.py — Anki APKG
+- [x] srs/db.py — SQLite schema
+- [x] srs/scheduler.py — SM-2 algorithm
+- [x] srs/flashcard_export.py — Anki APKG
 
 ### Phase 7 — UI
-- [ ] ui/app.py — Streamlit frontend
+- [x] ui/app.py — Streamlit frontend
 
 ### Phase 8 — Scripts & Tests
-- [ ] scripts/setup_local.sh
-- [ ] scripts/run_pipeline.sh
-- [ ] scripts/demo.sh
-- [ ] tests/conftest.py
-- [ ] tests/test_ingest.py
-- [ ] tests/test_chunk.py
-- [ ] tests/test_rag.py
-- [ ] tests/test_api.py
+- [x] scripts/setup_local.sh
+- [x] scripts/run_pipeline.sh
+- [x] scripts/demo.sh
+- [x] tests/conftest.py
+- [x] tests/test_ingest.py
+- [x] tests/test_chunk.py
+- [x] tests/test_rag.py
+- [x] tests/test_api.py
 
 ### Phase 9 — Documentation
-- [ ] README.md
-- [ ] .env.example
-- [ ] pyproject.toml
-- [ ] examples/sample_input.pdf
+- [x] README.md
+- [x] .env.example
+- [x] pyproject.toml
+- [x] examples/sample_input.pdf
 
 ### Phase 10 — End-to-End Verification
-- [ ] Step 1: Ingest sample PDF
-- [ ] Step 2: Build FAISS index
-- [ ] Step 3: Generate dataset
-- [ ] Step 4: Quality check
-- [ ] Step 5: API smoke test
-- [ ] Step 6: UI smoke test
-- [ ] Step 7: Test suite passes
+- [x] Step 1: Ingest sample PDF
+- [x] Step 2: Build FAISS index
+- [x] Step 3: Generate dataset
+- [x] Step 4: Quality check
+- [x] Step 5: API smoke test
+- [x] Step 6: UI smoke test
+- [x] Step 7: Test suite passes
 
 ## Dependency Install Order
 
@@ -116,7 +116,13 @@ With 8GB VRAM and 4-bit QLoRA:
 - **Verdict: VIABLE for local LoRA fine-tuning**
 
 ## Known Issues
-(populated during build)
+- PyTorch CUDA wheels required cu126 index (Python 3.14 not supported on cu124)
+- `torchaudio` not available for Python 3.14 (not needed for core functionality)
+- Template-generated dataset examples have lower quality scores for creative modes (mnemonics, concept_map) — use Ollama generation for production datasets
 
 ## Bonus Features
-(populated during build)
+- **Confidence Indicator** — Visual green/yellow/orange/red confidence bar based on retrieval quality
+- **Auto-Flashcard Generation** — Extracts definition patterns from study material to create flashcards automatically
+- **Study Streak Tracker** — Visual daily streak display to motivate consistent studying
+- **Quick Mode Buttons** — One-click rapid switching between study output modes in the UI
+- **Topic Mastery Decay** — Recency-weighted mastery scoring that reflects real knowledge retention over time
