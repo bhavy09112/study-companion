@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Study Companion AI · Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&family=Literata:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+<script src="/static/theme.js"></script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body data-page="study" class="bg-background text-on-surface font-body-md min-h-screen">
+<div id="shell-root"></div>
+
+<!-- Main canvas -->
+<main class="ml-64 px-md lg:px-lg pb-xl max-w-[1280px] mx-auto flex flex-col gap-md">
+    <!-- Page intro -->
+    <section class="mt-md">
+        <h2 class="font-headline-lg text-headline-lg text-primary m-0">Study a Topic</h2>
+        <p class="font-body-md text-on-surface-variant mt-xs mb-0">Ask anything from your indexed material. Generate explanations, exam notes, mnemonics, concept maps, and more — grounded in your sources.</p>
+    </section>
+
+    <!-- Generation Control Deck -->
+    <section class="bg-surface-container-lowest rounded-xl border border-outline-variant p-md shadow-level-1 w-full">
+        <div class="flex flex-col md:flex-row items-end gap-md w-full">
+            <div class="flex flex-col gap-base flex-grow w-full">
+                <label for="topic-input" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Topic or Question</label>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">psychology</span>
+                    <input id="topic-input" type="text"
+                           class="w-full border border-outline-variant rounded-lg py-[10px] pl-10 pr-sm font-body-md text-body-md text-on-surface focus:outline-none focus:border-secondary focus:border-2 bg-surface-bright transition-all"
+                           placeholder="e.g., Explain the mechanisms of Action Potentials" />
+                </div>
+            </div>
+            <div class="flex flex-col gap-base w-full md:w-56 flex-shrink-0">
+                <label for="mode-select" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Output Mode</label>
+                <div class="relative">
+                    <select id="mode-select"
+                            class="w-full border border-outline-variant rounded-lg py-[10px] pl-sm pr-10 font-body-md text-body-md text-on-surface appearance-none bg-surface-bright focus:outline-none focus:border-secondary focus:border-2 transition-all cursor-pointer">
+                        <option value="simple_explanation">Simple Explanation</option>
+                        <option value="key_concepts" selected>Key Concepts</option>
+                        <option value="exam_critical">Exam Critical</option>
+                        <option value="detailed_explanation">Deep Dive</option>
+                        <option value="common_mistakes">Common Mistakes</option>
+                        <option value="practice_questions">Practice Questions</option>
+                        <option value="revision_sheet">Revision Sheet</option>
+                        <option value="mnemonics">Mnemonics</option>
+                        <option value="concept_map">Concept Map</option>
+                    </select>
+                    <span class="material-symbols-outlined absolute right-sm top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+                </div>
+            </div>
+            <button id="generate-btn"
+                    class="bg-primary text-on-primary font-label-md text-label-md rounded-lg py-[10px] px-lg flex items-center justify-center gap-xs hover:bg-primary-container transition-colors duration-200 flex-shrink-0 h-[46px] disabled:opacity-50 disabled:cursor-not-allowed">
+                <span class="material-symbols-outlined text-[20px]" id="generate-icon">auto_awesome</span>
+                <span id="generate-label">Generate</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Workspace -->
+    <div class="grid grid-cols-12 gap-gutter items-start">
+        <!-- Result Canvas -->
+        <article class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-xl border border-outline-variant shadow-level-1 min-h-[600px] flex flex-col">
+            <div class="px-md py-sm border-b border-outline-variant flex justify-between items-center bg-surface-bright rounded-t-xl">
+                <div class="flex items-center gap-sm">
+                    <span class="material-symbols-outlined text-secondary">article</span>
+                    <h2 class="font-label-md text-label-md text-on-surface m-0">Generated Content</h2>
+                    <span id="confidence-chip" class="hidden font-label-sm text-label-sm px-2 py-[2px] rounded-full"></span>
+                </div>
+                <div class="flex gap-sm">
+                    <button id="copy-btn" title="Copy as Markdown" class="text-on-surface-variant hover:text-primary transition-colors disabled:opacity-40 disabled:cursor-not-allowed" disabled>
+                        <span class="material-symbols-outlined text-[20px]">content_copy</span>
+                    </button>
+                    <button id="bookmark-btn" title="Bookmark this" class="text-on-surface-variant hover:text-primary transition-colors disabled:opacity-40 disabled:cursor-not-allowed" disabled>
+                        <span class="material-symbols-outlined text-[20px]">bookmark</span>
+                    </button>
+                </div>
+            </div>
+            <div id="result-area" class="p-md lg:p-lg overflow-y-auto flex-grow prose-sc font-body-md text-on-surface">
+                <div class="bg-surface-container-low border border-outline-variant rounded-lg p-md flex items-start gap-sm">
+                    <span class="material-symbols-outlined text-secondary mt-[2px]">info</span>
+                    <div>
+                        <strong class="font-label-md text-label-md text-on-surface block mb-[2px]">Welcome</strong>
+                        <span class="font-body-sm text-on-surface-variant">Enter a topic above and hit <b>Generate</b>. The model will retrieve from your indexed sources and produce study material in the selected mode.</span>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Right column -->
+        <aside class="col-span-12 lg:col-span-4 flex flex-col gap-md">
+            <!-- Quick Actions -->
+            <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-level-1 p-md">
+                <div class="flex items-center gap-xs mb-sm">
+                    <span class="material-symbols-outlined text-on-surface-variant text-[20px]">bolt</span>
+                    <h3 class="font-label-md text-label-md text-on-surface m-0">Quick Actions</h3>
+                </div>
+                <p class="font-body-sm text-on-surface-variant mb-sm">Modify the current generated content.</p>
+                <div class="flex flex-wrap gap-xs" id="quick-actions">
+                    <button data-action="summarize" class="qa-btn border border-primary text-primary hover:bg-surface-container-high font-label-sm text-label-sm rounded-lg px-sm py-[6px] transition-colors flex items-center gap-xs disabled:opacity-40 disabled:cursor-not-allowed" disabled>
+                        <span class="material-symbols-outlined text-[16px]">short_text</span> Summarize
+                    </button>
+                    <button data-action="simplify" class="qa-btn border border-primary text-primary hover:bg-surface-container-high font-label-sm text-label-sm rounded-lg px-sm py-[6px] transition-colors flex items-center gap-xs disabled:opacity-40 disabled:cursor-not-allowed" disabled>
+                        <span class="material-symbols-outlined text-[16px]">child_care</span> Simplify
+                    </button>
+                    <button data-action="elaborate" class="qa-btn border border-primary text-primary hover:bg-surface-container-high font-label-sm text-label-sm rounded-lg px-sm py-[6px] transition-colors flex items-center gap-xs disabled:opacity-40 disabled:cursor-not-allowed" disabled>
+                        <span class="material-symbols-outlined text-[16px]">unfold_more</span> Elaborate
+                    </button>
+                    <button data-action="make-flashcards" class="qa-btn border border-primary text-primary hover:bg-surface-container-high font-label-sm text-label-sm rounded-lg px-sm py-[6px] transition-colors flex items-center gap-xs disabled:opacity-40 disabled:cursor-not-allowed" disabled>
+                        <span class="material-symbols-outlined text-[16px]">style</span> Make Flashcards
+                    </button>
+                    <div class="flex items-center gap-xs w-full mt-xs">
+                        <input id="translate-lang" type="text" value="Spanish" placeholder="Language"
+                               class="flex-grow border border-outline-variant rounded-lg py-[5px] px-sm font-body-sm text-body-sm bg-surface-bright focus:outline-none focus:border-secondary" />
+                        <button data-action="translate" class="qa-btn border border-outline-variant text-on-surface-variant hover:bg-surface-container-low font-label-sm text-label-sm rounded-lg px-sm py-[6px] transition-colors flex items-center gap-xs disabled:opacity-40 disabled:cursor-not-allowed" disabled>
+                            <span class="material-symbols-outlined text-[16px]">translate</span> Translate
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cited Sources -->
+            <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-level-1 p-md flex-grow">
+                <div class="flex justify-between items-center mb-sm border-b border-outline-variant pb-xs">
+                    <div class="flex items-center gap-xs">
+                        <span class="material-symbols-outlined text-on-surface-variant text-[20px]">menu_book</span>
+                        <h3 class="font-label-md text-label-md text-on-surface m-0">Cited Sources</h3>
+                    </div>
+                    <span id="sources-count" class="bg-surface-container-high text-primary font-label-sm text-label-sm px-[6px] py-[2px] rounded">0</span>
+                </div>
+                <div id="sources-list" class="flex flex-col gap-xs mt-sm">
+                    <p class="font-body-sm text-on-surface-variant">Sources will appear once you generate from indexed material.</p>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Quick mode chips -->
+    <section class="mt-xs">
+        <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-xs">Quick modes</p>
+        <div class="flex flex-wrap gap-xs">
+            <button data-quick="simple_explanation" class="qm-btn bg-surface-container-lowest border border-outline-variant hover:border-primary hover:bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg px-sm py-xs flex items-center gap-xs transition-colors">
+                <span class="material-symbols-outlined text-[16px] text-secondary">menu_book</span> Simple
+            </button>
+            <button data-quick="key_concepts" class="qm-btn bg-surface-container-lowest border border-outline-variant hover:border-primary hover:bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg px-sm py-xs flex items-center gap-xs transition-colors">
+                <span class="material-symbols-outlined text-[16px] text-secondary">key</span> Key Points
+            </button>
+            <button data-quick="exam_critical" class="qm-btn bg-surface-container-lowest border border-outline-variant hover:border-primary hover:bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg px-sm py-xs flex items-center gap-xs transition-colors">
+                <span class="material-symbols-outlined text-[16px] text-secondary">bolt</span> Exam Critical
+            </button>
+            <button data-quick="mnemonics" class="qm-btn bg-surface-container-lowest border border-outline-variant hover:border-primary hover:bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg px-sm py-xs flex items-center gap-xs transition-colors">
+                <span class="material-symbols-outlined text-[16px] text-secondary">psychology</span> Mnemonics
+            </button>
+            <button data-quick="concept_map" class="qm-btn bg-surface-container-lowest border border-outline-variant hover:border-primary hover:bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg px-sm py-xs flex items-center gap-xs transition-colors">
+                <span class="material-symbols-outlined text-[16px] text-secondary">account_tree</span> Concept Map
+            </button>
+        </div>
+    </section>
+</main>
+
+<script src="/static/shell.js"></script>
+<script src="/static/api.js"></script>
+<script src="/static/study.js"></script>
+</body>
+</html>

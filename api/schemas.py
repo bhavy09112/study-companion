@@ -166,3 +166,164 @@ class HealthResponse(BaseModel):
     index_size: int = 0
     db_cards: int = 0
     status: str = "ok"
+
+
+# ── Refine (Quick Actions) ──────────────────────────────
+
+class RefineRequest(BaseModel):
+    """Apply a quick action to existing content."""
+    content: str
+    action: str = Field(..., description="summarize | simplify | translate | elaborate")
+    target_language: Optional[str] = Field(default=None, description="For translate")
+
+
+class RefineResponse(BaseModel):
+    output: str
+    action: str
+
+
+# ── Make Flashcards ─────────────────────────────────────
+
+class FlashcardsFromTextRequest(BaseModel):
+    text: str = Field(..., description="Source text to extract Q/A pairs from")
+    topic: Optional[str] = None
+    n_cards: int = Field(default=8, ge=1, le=30)
+
+
+class FlashcardsFromTextResponse(BaseModel):
+    cards_added: int
+    cards: list[Flashcard]
+
+
+# ── Quiz Extras ─────────────────────────────────────────
+
+class QuizHintRequest(BaseModel):
+    question_id: str
+    session_id: str
+
+
+class QuizHintResponse(BaseModel):
+    hint: str
+
+
+class QuizFlagRequest(BaseModel):
+    session_id: str
+    question_id: str
+    flagged: bool = True
+
+
+class QuizFlagResponse(BaseModel):
+    flagged_ids: list[str]
+
+
+# ── Index Management ────────────────────────────────────
+
+class IndexedFile(BaseModel):
+    source: str
+    chunk_count: int
+
+
+class IndexFilesResponse(BaseModel):
+    files: list[IndexedFile]
+    total_chunks: int
+
+
+class ClearIndexResponse(BaseModel):
+    cleared: bool
+    deleted_chunks: int
+
+
+# ── Sessions / Activity ─────────────────────────────────
+
+class RecentSession(BaseModel):
+    id: str
+    topic: Optional[str] = None
+    kind: str
+    duration_seconds: int = 0
+    score: Optional[float] = None
+    impact_score: Optional[float] = None
+    started_at: str
+
+
+class RecentSessionsResponse(BaseModel):
+    sessions: list[RecentSession]
+
+
+class HeatmapDay(BaseModel):
+    day: str
+    count: int
+    duration: int
+
+
+class HeatmapResponse(BaseModel):
+    days: list[HeatmapDay]
+
+
+class LogSessionRequest(BaseModel):
+    kind: str = Field(..., description="study | quiz | flashcards")
+    topic: Optional[str] = None
+    duration_seconds: int = 0
+    score: Optional[float] = None
+    impact_score: Optional[float] = None
+
+
+class LogSessionResponse(BaseModel):
+    id: str
+
+
+# ── Search ──────────────────────────────────────────────
+
+class SearchHit(BaseModel):
+    kind: str  # chunk | card | bookmark
+    title: str
+    snippet: str
+    score: float = 0.0
+    extra: dict = Field(default_factory=dict)
+
+
+class SearchResponse(BaseModel):
+    query: str
+    hits: list[SearchHit]
+
+
+# ── Bookmarks ───────────────────────────────────────────
+
+class Bookmark(BaseModel):
+    id: str
+    topic: Optional[str] = None
+    mode: Optional[str] = None
+    content: str
+    created_at: str
+
+
+class BookmarkCreateRequest(BaseModel):
+    content: str
+    topic: Optional[str] = None
+    mode: Optional[str] = None
+
+
+class BookmarksResponse(BaseModel):
+    bookmarks: list[Bookmark]
+
+
+# ── Flashcard Undo ──────────────────────────────────────
+
+class UndoReviewRequest(BaseModel):
+    card_id: str
+
+
+class UndoReviewResponse(BaseModel):
+    undone: bool
+
+
+# ── Dashboard Metrics ───────────────────────────────────
+
+class DashboardMetrics(BaseModel):
+    study_hours_total: float
+    study_hours_week: float
+    weekly_goal_percent: float
+    flashcard_retention: float
+    review_due_count: int
+    mastered_count: int
+    quiz_avg_score: Optional[float] = None
+    quiz_letter_grade: str = ""

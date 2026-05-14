@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Study Companion AI · Progress</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&family=Literata:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+<script src="/static/theme.js"></script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body data-page="progress" class="bg-background text-on-surface font-body-md min-h-screen">
+<div id="shell-root"></div>
+
+<main class="ml-64 px-md lg:px-margin-desktop max-w-7xl mx-auto pb-xl">
+    <div class="mt-md mb-lg flex justify-between items-end">
+        <div>
+            <h2 class="font-headline-lg text-headline-lg text-primary m-0">Dashboard Metrics</h2>
+            <p class="font-body-md text-on-surface-variant mt-xs">Track your cognitive load, mastery, and system health.</p>
+        </div>
+        <button id="refresh-dash" class="border border-outline-variant text-primary font-label-md text-label-md py-xs px-sm rounded hover:bg-surface-container-low transition-colors flex items-center gap-xs">
+            <span class="material-symbols-outlined text-sm">refresh</span> Refresh
+        </button>
+    </div>
+
+    <!-- Row 1: top metrics -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+        <div class="col-span-1 md:col-span-4 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-level-1 p-md hover:shadow-level-2 transition-shadow duration-300 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between mb-sm">
+                    <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Study Time</span>
+                    <span class="material-symbols-outlined text-secondary">schedule</span>
+                </div>
+                <div class="font-headline-xl text-headline-xl font-bold text-primary mb-1">
+                    <span id="m-hours">0.0</span><span class="text-[20px] font-medium text-on-surface-variant ml-1">hrs</span>
+                </div>
+                <p class="font-body-sm text-secondary">+<span id="m-week">0.0</span> hrs this week</p>
+            </div>
+            <div class="mt-md">
+                <div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant mb-1">
+                    <span>Weekly Goal</span>
+                    <span><span id="m-goal-pct">0</span>%</span>
+                </div>
+                <div class="h-2 w-full bg-tertiary-fixed rounded-full overflow-hidden">
+                    <div id="m-goal-bar" class="h-full bg-secondary rounded-full" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-4 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-level-1 p-md hover:shadow-level-2 transition-shadow duration-300 flex flex-col justify-between relative overflow-hidden">
+            <div class="absolute -right-8 -top-8 w-32 h-32 bg-primary-fixed-dim rounded-full opacity-20 blur-2xl"></div>
+            <div class="relative z-10">
+                <div class="flex items-center justify-between mb-sm">
+                    <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Flashcard Mastery</span>
+                    <span class="material-symbols-outlined text-secondary">psychology</span>
+                </div>
+                <div class="font-headline-xl text-headline-xl font-bold text-primary mb-1">
+                    <span id="m-retention">0</span><span class="text-[20px] font-medium text-on-surface-variant ml-1">%</span>
+                </div>
+                <p class="font-body-sm text-on-surface-variant">Retention across all decks</p>
+            </div>
+            <div class="mt-md relative z-10 grid grid-cols-2 gap-xs">
+                <div class="bg-surface rounded-lg p-2 border border-surface-variant">
+                    <span class="block font-label-sm text-on-surface-variant">Review Due</span>
+                    <span class="font-label-md text-primary font-bold"><span id="m-due">0</span> cards</span>
+                </div>
+                <div class="bg-surface rounded-lg p-2 border border-surface-variant">
+                    <span class="block font-label-sm text-on-surface-variant">Mastered</span>
+                    <span class="font-label-md text-secondary font-bold"><span id="m-mastered">0</span> cards</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-4 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-level-1 p-md hover:shadow-level-2 transition-shadow duration-300 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between mb-sm">
+                    <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Quiz Performance</span>
+                    <span class="material-symbols-outlined text-secondary">checklist</span>
+                </div>
+                <div class="font-headline-xl text-headline-xl font-bold text-primary mb-1">
+                    <span id="m-grade">—</span>
+                    <span class="text-[20px] font-medium text-on-surface-variant ml-2">Avg</span>
+                </div>
+                <p class="font-body-sm text-on-surface-variant"><span id="m-quiz-detail">No data yet.</span></p>
+            </div>
+            <div class="mt-md flex items-end gap-1 h-12" id="m-sparkline"></div>
+        </div>
+
+        <!-- Row 2: Health + activity -->
+        <div class="col-span-1 md:col-span-5 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-level-1 p-md">
+            <div class="flex items-center gap-xs mb-md border-b border-outline-variant pb-sm">
+                <span class="material-symbols-outlined text-on-secondary-container">database</span>
+                <h3 class="font-label-md text-label-md font-bold text-primary m-0">Model &amp; Index Health</h3>
+            </div>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-xs">
+                        <span id="h-status-dot" class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span>
+                        <span class="font-body-md text-on-surface">Index Status</span>
+                    </div>
+                    <span id="h-status-pill" class="font-label-md text-label-md bg-surface-container px-2 py-[2px] rounded text-primary">Loading…</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="font-body-md text-on-surface">Active Model</span>
+                    <span id="h-model" class="font-body-md text-secondary font-medium truncate max-w-[200px]">—</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="font-body-md text-on-surface">Vector Chunk Count</span>
+                    <span id="h-chunks" class="font-body-md text-on-surface font-medium">0</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="font-body-md text-on-surface">Total Flashcards</span>
+                    <span id="h-cards" class="font-body-md text-on-surface font-medium">0</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="font-body-md text-on-surface">Last Sync</span>
+                    <span id="h-sync" class="font-body-md text-on-surface-variant text-sm">just now</span>
+                </div>
+            </div>
+            <div class="mt-md pt-sm border-t border-outline-variant">
+                <button id="h-diagnostics" class="text-secondary font-label-md text-label-md hover:underline flex items-center gap-xs">
+                    Run Diagnostics <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-7 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-level-1 p-md">
+            <div class="flex items-center justify-between mb-md border-b border-outline-variant pb-sm">
+                <h3 class="font-label-md text-label-md font-bold text-primary m-0">Activity Intensity</h3>
+                <select id="heatmap-range" class="bg-surface border-none text-on-surface-variant font-label-sm text-label-sm cursor-pointer outline-none ring-0 focus:ring-0">
+                    <option value="30">Last 30 days</option>
+                    <option value="14">Last 14 days</option>
+                    <option value="7">Last 7 days</option>
+                </select>
+            </div>
+            <div id="heatmap-bars" class="h-48 w-full flex items-end justify-between gap-1 pb-2"></div>
+            <div class="flex justify-between text-on-surface-variant font-label-sm text-label-sm mt-2">
+                <span id="heatmap-start">—</span>
+                <span id="heatmap-end">—</span>
+            </div>
+        </div>
+
+        <!-- Topic mastery -->
+        <div class="col-span-1 md:col-span-12 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-level-1 p-md">
+            <div class="flex items-center gap-xs mb-md border-b border-outline-variant pb-sm">
+                <span class="material-symbols-outlined text-on-secondary-container">school</span>
+                <h3 class="font-label-md text-label-md font-bold text-primary m-0">Topic Mastery</h3>
+            </div>
+            <div id="topic-mastery" class="flex flex-col gap-sm">
+                <p class="font-body-sm text-on-surface-variant">No topics tracked yet.</p>
+            </div>
+        </div>
+
+        <!-- Recent sessions -->
+        <div class="col-span-1 md:col-span-12 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-level-1 overflow-hidden">
+            <div class="p-md border-b border-outline-variant flex items-center justify-between">
+                <h3 class="font-label-md text-label-md font-bold text-primary m-0">Recent Study Sessions</h3>
+                <button id="sessions-refresh" class="text-secondary font-label-sm text-label-sm hover:underline">Refresh</button>
+            </div>
+            <div class="w-full">
+                <div class="grid grid-cols-12 gap-md px-md py-sm bg-surface-bright border-b border-surface-variant font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+                    <div class="col-span-5">Topic / Activity</div>
+                    <div class="col-span-3">Date</div>
+                    <div class="col-span-2">Duration</div>
+                    <div class="col-span-2 text-right">Impact</div>
+                </div>
+                <div id="sessions-list" class="divide-y divide-surface-variant"></div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="/static/shell.js"></script>
+<script src="/static/api.js"></script>
+<script src="/static/progress.js"></script>
+</body>
+</html>

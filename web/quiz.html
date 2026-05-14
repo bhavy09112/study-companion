@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Study Companion AI · Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&family=Literata:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+<script src="/static/theme.js"></script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body data-page="quiz" class="bg-background text-on-surface font-body-md min-h-screen">
+<div id="shell-root"></div>
+
+<main class="ml-64 px-md lg:px-margin-desktop max-w-[1280px] mx-auto pb-xl">
+    <!-- Start view -->
+    <section id="quiz-start" class="mt-md">
+        <h2 class="font-headline-lg text-headline-lg text-primary m-0">Start a Quiz</h2>
+        <p class="font-body-md text-on-surface-variant mt-xs mb-md">Generate multiple-choice questions from your indexed material. Track time, flag tricky items, request hints.</p>
+
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-md shadow-level-1 max-w-[760px]">
+            <div class="flex flex-col gap-md">
+                <div>
+                    <label for="quiz-topics" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block mb-xs">Topics (comma-separated)</label>
+                    <input id="quiz-topics" type="text" placeholder="photosynthesis, cellular respiration"
+                           class="w-full border border-outline-variant rounded-lg py-[10px] px-sm font-body-md bg-surface-bright focus:outline-none focus:border-secondary focus:border-2" />
+                </div>
+                <div class="grid grid-cols-3 gap-md">
+                    <div>
+                        <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider flex justify-between">
+                            Questions <span id="quiz-n-val" class="text-primary font-bold">5</span>
+                        </label>
+                        <input id="quiz-n" type="range" min="1" max="20" value="5" class="mt-xs" />
+                    </div>
+                    <div>
+                        <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider flex justify-between">
+                            Time limit (sec) <span id="quiz-time-val" class="text-primary font-bold">300</span>
+                        </label>
+                        <input id="quiz-time" type="range" min="60" max="1800" step="30" value="300" class="mt-xs" />
+                    </div>
+                    <div>
+                        <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block">Difficulty</label>
+                        <div class="relative mt-xs">
+                            <select id="quiz-difficulty"
+                                    class="w-full border border-outline-variant rounded-lg py-[10px] pl-sm pr-10 font-body-md appearance-none bg-surface-bright focus:outline-none focus:border-secondary cursor-pointer">
+                                <option value="Easy">Easy</option>
+                                <option value="Medium" selected>Medium</option>
+                                <option value="Hard">Hard</option>
+                            </select>
+                            <span class="material-symbols-outlined absolute right-sm top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+                        </div>
+                    </div>
+                </div>
+                <button id="quiz-start-btn" disabled
+                        class="bg-primary text-on-primary font-label-md text-label-md rounded-lg py-[10px] px-lg flex items-center justify-center gap-xs hover:bg-primary-container transition-colors h-[46px] self-start disabled:opacity-50 disabled:cursor-not-allowed">
+                    <span class="material-symbols-outlined text-[20px]">rocket_launch</span>
+                    Start Quiz
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Active quiz view -->
+    <section id="quiz-active" class="hidden mt-md">
+        <div class="mb-lg">
+            <h2 class="font-headline-lg text-headline-lg text-primary m-0">Interactive Quiz</h2>
+            <p id="quiz-topic-label" class="font-body-md text-on-surface-variant mt-xs"></p>
+        </div>
+
+        <div class="grid grid-cols-12 gap-gutter items-start">
+            <!-- Question card -->
+            <div class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-level-1 p-lg flex flex-col relative overflow-hidden">
+                <div class="flex justify-between items-center mb-md">
+                    <span id="quiz-progress-label" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Question 1 of 1</span>
+                    <span id="quiz-difficulty-label" class="font-label-sm text-label-sm text-secondary font-bold">Medium Difficulty</span>
+                </div>
+                <div class="w-full h-2 bg-tertiary-fixed rounded-full mb-xl overflow-hidden">
+                    <div id="quiz-progress-bar" class="h-full bg-secondary rounded-full transition-all" style="width: 0%"></div>
+                </div>
+
+                <div class="mb-xl">
+                    <h3 id="quiz-question-text" class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-on-background leading-relaxed">…</h3>
+                </div>
+
+                <div id="quiz-options" class="flex flex-col gap-sm mb-md"></div>
+
+                <div id="quiz-hint-box" class="hidden bg-surface-bright rounded-lg border border-outline-variant p-md border-l-4 border-l-secondary-container my-md">
+                    <div class="flex items-center gap-xs mb-xs text-on-secondary-container">
+                        <span class="material-symbols-outlined icon-fill text-sm">lightbulb</span>
+                        <h4 class="font-label-md text-label-md font-bold">AI Context Hint</h4>
+                    </div>
+                    <p id="quiz-hint-text" class="font-body-sm text-on-surface-variant leading-relaxed"></p>
+                </div>
+
+                <div class="flex justify-between items-center mt-auto pt-md border-t border-outline-variant gap-xs">
+                    <div class="flex gap-xs">
+                        <button id="quiz-hint-btn" class="text-on-surface-variant border border-outline-variant font-label-md text-label-md px-sm py-xs hover:text-primary hover:bg-surface-container-low rounded transition-colors flex items-center gap-xs">
+                            <span class="material-symbols-outlined text-sm">lightbulb</span> Hint
+                        </button>
+                        <button id="quiz-flag-btn" class="text-secondary border border-outline-variant font-label-md text-label-md px-sm py-xs hover:bg-surface-container-low rounded transition-colors flex items-center gap-xs">
+                            <span id="quiz-flag-icon" class="material-symbols-outlined text-sm">flag</span>
+                            <span id="quiz-flag-label">Flag for Review</span>
+                        </button>
+                    </div>
+                    <div class="flex gap-xs">
+                        <button id="quiz-prev" class="text-primary border border-outline-variant font-label-md text-label-md py-xs px-sm rounded hover:bg-surface-container-low transition-colors flex items-center gap-xs disabled:opacity-40 disabled:cursor-not-allowed" disabled>
+                            <span class="material-symbols-outlined text-sm">arrow_back</span> Prev
+                        </button>
+                        <button id="quiz-next" class="bg-primary text-on-primary font-label-md text-label-md py-xs px-sm rounded hover:bg-primary-container transition-colors flex items-center gap-xs">
+                            Next <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                        </button>
+                        <button id="quiz-submit" class="bg-primary text-on-primary font-label-md text-label-md py-xs px-md rounded hover:bg-primary-container transition-colors flex items-center gap-xs shadow-sm hidden">
+                            Submit <span class="material-symbols-outlined text-sm">check_circle</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats panel -->
+            <div class="col-span-12 lg:col-span-4 flex flex-col gap-md">
+                <div class="bg-surface-container-lowest rounded-lg border border-outline-variant p-md shadow-level-1">
+                    <h4 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-sm">Session Metrics</h4>
+                    <div class="flex flex-col gap-sm">
+                        <div class="flex justify-between items-center">
+                            <span class="font-body-sm text-on-background">Time Elapsed</span>
+                            <span id="quiz-time-elapsed" class="font-label-md text-label-md text-on-background font-bold">00:00</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-body-sm text-on-background">Time Remaining</span>
+                            <span id="quiz-time-remaining" class="font-label-md text-label-md text-secondary font-bold">05:00</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-body-sm text-on-background">Answered</span>
+                            <span id="quiz-answered" class="font-label-md text-label-md text-on-background font-bold">0 / 0</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-body-sm text-on-background">Flagged</span>
+                            <span id="quiz-flagged-count" class="font-label-md text-label-md text-on-background font-bold">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-surface-container-lowest rounded-lg border border-outline-variant p-md shadow-level-1">
+                    <h4 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-sm">Jump to question</h4>
+                    <div id="quiz-question-grid" class="grid grid-cols-5 gap-xs"></div>
+                </div>
+
+                <button id="quiz-cancel" class="border border-outline-variant text-error font-label-md text-label-md py-xs px-sm rounded hover:bg-error-container hover:text-on-error-container transition-colors flex items-center justify-center gap-xs">
+                    <span class="material-symbols-outlined text-sm">close</span> Cancel Quiz
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Result view -->
+    <section id="quiz-result" class="hidden mt-md">
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-level-1 p-lg">
+            <h2 class="font-headline-lg text-headline-lg text-primary m-0">Quiz Complete</h2>
+            <div class="grid grid-cols-3 gap-gutter mt-md">
+                <div class="bg-surface-bright border border-outline-variant rounded-lg p-md">
+                    <div class="font-label-sm uppercase tracking-wider text-on-surface-variant">Score</div>
+                    <div id="result-score" class="font-headline-xl text-headline-xl text-primary mt-xs">0%</div>
+                </div>
+                <div class="bg-surface-bright border border-outline-variant rounded-lg p-md">
+                    <div class="font-label-sm uppercase tracking-wider text-on-surface-variant">Correct</div>
+                    <div id="result-correct" class="font-headline-xl text-headline-xl text-secondary mt-xs">0/0</div>
+                </div>
+                <div class="bg-surface-bright border border-outline-variant rounded-lg p-md">
+                    <div class="font-label-sm uppercase tracking-wider text-on-surface-variant">Weak topics</div>
+                    <div id="result-weak" class="font-body-md text-on-surface mt-xs">—</div>
+                </div>
+            </div>
+            <div class="mt-md">
+                <h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-sm">Per-question breakdown</h3>
+                <div id="result-breakdown" class="flex flex-col gap-xs"></div>
+            </div>
+            <div class="flex gap-xs mt-md">
+                <button id="result-again" class="bg-primary text-on-primary font-label-md text-label-md py-xs px-md rounded hover:bg-primary-container transition-colors flex items-center gap-xs">
+                    <span class="material-symbols-outlined text-sm">restart_alt</span> New Quiz
+                </button>
+                <a href="/progress-page" class="border border-outline-variant text-primary font-label-md text-label-md py-xs px-md rounded hover:bg-surface-container-low transition-colors flex items-center gap-xs">
+                    <span class="material-symbols-outlined text-sm">analytics</span> View Progress
+                </a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script src="/static/shell.js"></script>
+<script src="/static/api.js"></script>
+<script src="/static/quiz.js"></script>
+</body>
+</html>

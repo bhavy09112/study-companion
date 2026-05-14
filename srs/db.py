@@ -70,9 +70,28 @@ def init_db() -> None:
                 last_studied_at TEXT
             );
 
+            CREATE TABLE IF NOT EXISTS sessions (
+                id TEXT PRIMARY KEY,
+                topic TEXT,
+                kind TEXT NOT NULL,
+                duration_seconds INTEGER NOT NULL DEFAULT 0,
+                score REAL,
+                impact_score REAL,
+                started_at TEXT NOT NULL DEFAULT (datetime('now'))
+            );
+
+            CREATE TABLE IF NOT EXISTS bookmarks (
+                id TEXT PRIMARY KEY,
+                topic TEXT,
+                mode TEXT,
+                content TEXT NOT NULL,
+                created_at TEXT NOT NULL DEFAULT (datetime('now'))
+            );
+
             CREATE INDEX IF NOT EXISTS idx_reviews_card ON reviews(card_id);
             CREATE INDEX IF NOT EXISTS idx_reviews_next ON reviews(next_review_at);
             CREATE INDEX IF NOT EXISTS idx_cards_topic ON cards(topic);
+            CREATE INDEX IF NOT EXISTS idx_sessions_started ON sessions(started_at);
         """)
 
 
@@ -209,6 +228,156 @@ def get_all_cards() -> list[dict]:
     with get_connection() as conn:
         rows = conn.execute(
             "SELECT id, front, back, source_chunk_id, topic, created_at FROM cards"
+        ).fetchall()
+    return [dict(row) for row in rows]
+
+
+def delete_card(card_id: str) -> bool:
+    """Delete a card and its reviews. Returns True if deleted."""
+    with get_connection() as conn:
+        cur = conn.execute("DELETE FROM cards WHERE id = ?", (card_id,))
+        return cur.rowcount > 0
+
+
+def last_review(card_id: str) -> Optional[dict]:
+    """Return the most recent review for a card, or None."""
+    with get_connection() as conn:
+        row = conn.execute(
+            """SELECT id, card_id, reviewed_at, quality, interval_days, ease_factor, next_review_at
+               FROM reviews WHERE card_id = ?
+               ORDER BY reviewed_at DESC LIMIT 1""",
+            (card_id,),
+        ).fetchone()
+    return dict(row) if row else None
+
+
+def delete_last_review(card_id: str) -> bool:
+    """Remove the most recent review for a card (Undo support). Returns True if removed."""
+    last = last_review(card_id)
+    if not last:
+        return False
+    with get_connection() as conn:
+        cur = conn.execute("DELETE FROM reviews WHERE id = ?", (last["id"],))
+        return cur.rowcount > 0
+
+
+# ── Sessions ────────────────────────────────────────────
+
+def log_session(
+    kind: str,
+    topic: Optional[str] = None,
+    duration_seconds: int = 0,
+    score: Optional[float] = None,
+    impact_score: Optional[float] = None,
+) -> str:
+    """Record a study/quiz/flashcard session."""
+    sid = str(uuid.uuid4())
+    with get_connection() as conn:
+        conn.execute(
+            """INSERT INTO sessions (id, topic, kind, duration_seconds, score, impact_score)
+               VALUES (?, ?, ?, ?, ?, ?)""",
+            (sid, topic, kind, duration_seconds, score, impact_score),
+        )
+    return sid
+
+
+def get_recent_sessions(limit: int = 10) -> list[dict]:
+    """Get most recent sessions."""
+    with get_connection() as conn:
+        rows = conn.execute(
+            """SELECT id, topic, kind, duration_seconds, score, impact_score, started_at
+               FROM sessions ORDER BY started_at DESC LIMIT ?""",
+            (limit,),
+        ).fetchall()
+    return [dict(row) for row in rows]
+
+
+def get_activity_heatmap(days: int = 30) -> list[dict]:
+    """Get per-day session counts and total duration for the last N days."""
+    with get_connection() as conn:
+        rows = conn.execute(
+            """SELECT date(started_at) as day,
+                      COUNT(*) as count,
+                      COALESCE(SUM(duration_seconds), 0) as duration
+               FROM sessions
+               WHERE started_at >= date('now', ?)
+               GROUP BY day
+               ORDER BY day""",
+            (f"-{int(days)} days",),
+        ).fetchall()
+    return [dict(row) for row in rows]
+
+
+def get_total_study_seconds(days: Optional[int] = None) -> int:
+    """Total study time. Pass days=N to limit to last N days."""
+    with get_connection() as conn:
+        if days is None:
+            row = conn.execute(
+                "SELECT COALESCE(SUM(duration_seconds), 0) as total FROM sessions"
+            ).fetchone()
+        else:
+            row = conn.execute(
+                """SELECT COALESCE(SUM(duration_seconds), 0) as total FROM sessions
+                   WHERE started_at >= date('now', ?)""",
+                (f"-{int(days)} days",),
+            ).fetchone()
+    return int(row["total"])
+
+
+def get_avg_quiz_score(limit: int = 12) -> Optional[float]:
+    """Mean score across the last N quiz sessions, or None."""
+    with get_connection() as conn:
+        rows = conn.execute(
+            """SELECT score FROM sessions
+               WHERE kind = 'quiz' AND score IS NOT NULL
+               ORDER BY started_at DESC LIMIT ?""",
+            (limit,),
+        ).fetchall()
+    scores = [r["score"] for r in rows]
+    return sum(scores) / len(scores) if scores else None
+
+
+# ── Bookmarks ───────────────────────────────────────────
+
+def add_bookmark(content: str, topic: Optional[str] = None, mode: Optional[str] = None) -> str:
+    """Save a generated output for later."""
+    bid = str(uuid.uuid4())
+    with get_connection() as conn:
+        conn.execute(
+            "INSERT INTO bookmarks (id, topic, mode, content) VALUES (?, ?, ?, ?)",
+            (bid, topic, mode, content),
+        )
+    return bid
+
+
+def get_bookmarks(limit: int = 50) -> list[dict]:
+    """List bookmarks."""
+    with get_connection() as conn:
+        rows = conn.execute(
+            "SELECT id, topic, mode, content, created_at FROM bookmarks "
+            "ORDER BY created_at DESC LIMIT ?",
+            (limit,),
+        ).fetchall()
+    return [dict(row) for row in rows]
+
+
+def delete_bookmark(bookmark_id: str) -> bool:
+    with get_connection() as conn:
+        cur = conn.execute("DELETE FROM bookmarks WHERE id = ?", (bookmark_id,))
+        return cur.rowcount > 0
+
+
+# ── Search ──────────────────────────────────────────────
+
+def search_cards(query: str, limit: int = 20) -> list[dict]:
+    """Simple LIKE-based search across card front/back/topic."""
+    q = f"%{query}%"
+    with get_connection() as conn:
+        rows = conn.execute(
+            """SELECT id, front, back, topic, created_at FROM cards
+               WHERE front LIKE ? OR back LIKE ? OR topic LIKE ?
+               ORDER BY created_at DESC LIMIT ?""",
+            (q, q, q, limit),
         ).fetchall()
     return [dict(row) for row in rows]
 
