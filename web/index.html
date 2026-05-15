@@ -1,169 +1,272 @@
 <!DOCTYPE html>
-<html lang="en" class="light">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Study Companion AI · Study</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&family=Literata:wght@400;500&display=swap" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-<script src="/static/theme.js"></script>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Study Companion - Study</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link rel="stylesheet" href="/static/styles.css" />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&amp;family=Literata:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "surface-variant": "#d5e3fd",
+                        "on-secondary-container": "#003c70",
+                        "on-secondary-fixed": "#001c39",
+                        "surface-container": "#e6eeff",
+                        "secondary-fixed": "#d4e3ff",
+                        "outline": "#74777f",
+                        "inverse-surface": "#233144",
+                        "on-tertiary-fixed": "#171c1f",
+                        "tertiary-fixed-dim": "#c3c7cb",
+                        "primary-container": "#1a365d",
+                        "surface-bright": "#f8f9ff",
+                        "on-primary-fixed": "#001b3c",
+                        "tertiary-fixed": "#dfe3e7",
+                        "surface-container-low": "#eff4ff",
+                        "outline-variant": "#c4c6cf",
+                        "on-primary-container": "#86a0cd",
+                        "surface-container-highest": "#d5e3fd",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#a4c9ff",
+                        "on-secondary-fixed-variant": "#004883",
+                        "on-tertiary-fixed-variant": "#43474b",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#d6e3ff",
+                        "inverse-primary": "#adc7f7",
+                        "tertiary-container": "#313639",
+                        "tertiary": "#1c2124",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#64a8fe",
+                        "on-background": "#0d1c2f",
+                        "surface-tint": "#455f88",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#dde9ff",
+                        "on-surface": "#0d1c2f",
+                        "on-primary-fixed-variant": "#2d476f",
+                        "surface-dim": "#ccdbf4",
+                        "surface": "#f8f9ff",
+                        "secondary": "#0060ac",
+                        "primary-fixed-dim": "#adc7f7",
+                        "inverse-on-surface": "#ebf1ff",
+                        "error": "#ba1a1a",
+                        "primary": "#002045",
+                        "on-surface-variant": "#43474e",
+                        "background": "#f8f9ff",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#9a9fa3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "xs": "8px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "48px",
+                        "base": "4px",
+                        "sm": "16px",
+                        "lg": "40px",
+                        "xl": "64px",
+                        "gutter": "24px",
+                        "md": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Hanken Grotesk"],
+                        "label-md": ["Hanken Grotesk"],
+                        "headline-xl": ["Hanken Grotesk"],
+                        "label-sm": ["Hanken Grotesk"],
+                        "body-sm": ["Literata"],
+                        "body-md": ["Literata"],
+                        "headline-lg-mobile": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Subtle scrollbar for minimalism */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #dfe3e7; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #c4c6cf; }
+    </style>
 </head>
-<body data-page="study" class="bg-background text-on-surface font-body-md min-h-screen">
-<div id="shell-root"></div>
-
-<!-- Main canvas -->
-<main class="ml-64 px-md lg:px-lg pb-xl max-w-[1280px] mx-auto flex flex-col gap-md">
-    <!-- Page intro -->
-    <section class="mt-md">
-        <h2 class="font-headline-lg text-headline-lg text-primary m-0">Study a Topic</h2>
-        <p class="font-body-md text-on-surface-variant mt-xs mb-0">Ask anything from your indexed material. Generate explanations, exam notes, mnemonics, concept maps, and more — grounded in your sources.</p>
-    </section>
-
-    <!-- Generation Control Deck -->
-    <section class="bg-surface-container-lowest rounded-xl border border-outline-variant p-md shadow-level-1 w-full">
-        <div class="flex flex-col md:flex-row items-end gap-md w-full">
-            <div class="flex flex-col gap-base flex-grow w-full">
-                <label for="topic-input" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Topic or Question</label>
-                <div class="relative">
-                    <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">psychology</span>
-                    <input id="topic-input" type="text"
-                           class="w-full border border-outline-variant rounded-lg py-[10px] pl-10 pr-sm font-body-md text-body-md text-on-surface focus:outline-none focus:border-secondary focus:border-2 bg-surface-bright transition-all"
-                           placeholder="e.g., Explain the mechanisms of Action Potentials" />
-                </div>
-            </div>
-            <div class="flex flex-col gap-base w-full md:w-56 flex-shrink-0">
-                <label for="mode-select" class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Output Mode</label>
-                <div class="relative">
-                    <select id="mode-select"
-                            class="w-full border border-outline-variant rounded-lg py-[10px] pl-sm pr-10 font-body-md text-body-md text-on-surface appearance-none bg-surface-bright focus:outline-none focus:border-secondary focus:border-2 transition-all cursor-pointer">
-                        <option value="simple_explanation">Simple Explanation</option>
-                        <option value="key_concepts" selected>Key Concepts</option>
-                        <option value="exam_critical">Exam Critical</option>
-                        <option value="detailed_explanation">Deep Dive</option>
-                        <option value="common_mistakes">Common Mistakes</option>
-                        <option value="practice_questions">Practice Questions</option>
-                        <option value="revision_sheet">Revision Sheet</option>
-                        <option value="mnemonics">Mnemonics</option>
-                        <option value="concept_map">Concept Map</option>
-                    </select>
-                    <span class="material-symbols-outlined absolute right-sm top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
-                </div>
-            </div>
-            <button id="generate-btn"
-                    class="bg-primary text-on-primary font-label-md text-label-md rounded-lg py-[10px] px-lg flex items-center justify-center gap-xs hover:bg-primary-container transition-colors duration-200 flex-shrink-0 h-[46px] disabled:opacity-50 disabled:cursor-not-allowed">
-                <span class="material-symbols-outlined text-[20px]" id="generate-icon">auto_awesome</span>
-                <span id="generate-label">Generate</span>
-            </button>
-        </div>
-    </section>
-
-    <!-- Workspace -->
-    <div class="grid grid-cols-12 gap-gutter items-start">
-        <!-- Result Canvas -->
-        <article class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-xl border border-outline-variant shadow-level-1 min-h-[600px] flex flex-col">
-            <div class="px-md py-sm border-b border-outline-variant flex justify-between items-center bg-surface-bright rounded-t-xl">
-                <div class="flex items-center gap-sm">
-                    <span class="material-symbols-outlined text-secondary">article</span>
-                    <h2 class="font-label-md text-label-md text-on-surface m-0">Generated Content</h2>
-                    <span id="confidence-chip" class="hidden font-label-sm text-label-sm px-2 py-[2px] rounded-full"></span>
-                </div>
-                <div class="flex gap-sm">
-                    <button id="copy-btn" title="Copy as Markdown" class="text-on-surface-variant hover:text-primary transition-colors disabled:opacity-40 disabled:cursor-not-allowed" disabled>
-                        <span class="material-symbols-outlined text-[20px]">content_copy</span>
+<body data-page="study" class="bg-background text-on-surface font-body-md flex h-screen overflow-hidden">
+<!-- SideNavBar (Shared Component JSON) -->
+<!-- SC_SIDEBAR_START -->
+<nav class="bg-surface h-screen w-64 fixed left-0 top-0 border-r border-outline-variant flex flex-col py-md px-sm z-50">
+<a href="/" class="flex items-center gap-xs px-xs mb-lg" style="text-decoration:none;">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary font-bold">SC</div>
+<div>
+<h1 class="font-headline-lg text-primary text-[16px] leading-[20px] m-0 font-bold">Study Companion</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant m-0 uppercase tracking-wider">AI Assistant</p>
+</div>
+</a>
+<button class="bg-primary text-on-primary font-label-md text-label-md rounded-lg py-xs px-sm mb-lg flex items-center justify-center gap-xs hover:bg-primary-container transition-colors duration-200 w-full">
+<span class="material-symbols-outlined text-[18px]">upload_file</span>
+Upload Document
+</button>
+<div class="flex-grow flex flex-col gap-base">
+<a class="flex items-center gap-sm px-sm py-[8px] rounded-lg text-primary font-bold border-r-2 border-primary bg-surface-container-high transition-all" href="/"><span class="material-symbols-outlined icon-fill" style="font-variation-settings:'FILL' 1;">book_2</span><span class="font-label-md text-label-md">Study</span></a>
+<a class="flex items-center gap-sm px-sm py-[8px] rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors duration-200" href="/quiz"><span class="material-symbols-outlined">quiz</span><span class="font-label-md text-label-md">Quiz</span></a>
+<a class="flex items-center gap-sm px-sm py-[8px] rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors duration-200" href="/flashcards"><span class="material-symbols-outlined">style</span><span class="font-label-md text-label-md">Flashcards</span></a>
+<a class="flex items-center gap-sm px-sm py-[8px] rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors duration-200" href="/progress-page"><span class="material-symbols-outlined">analytics</span><span class="font-label-md text-label-md">Progress</span></a>
+<a class="flex items-center gap-sm px-sm py-[8px] rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors duration-200" href="/settings"><span class="material-symbols-outlined">settings</span><span class="font-label-md text-label-md">Settings</span></a>
+</div>
+<div class="border-t border-outline-variant pt-sm mt-sm">
+<a class="flex items-center gap-sm px-sm py-[8px] rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors duration-200" href="/progress-page">
+<span class="material-symbols-outlined">monitor_heart</span>
+<span class="font-label-md text-label-md">System Health</span>
+</a>
+</div>
+</nav>
+<!-- SC_SIDEBAR_END -->
+<!-- Main Content Wrapper -->
+<div class="ml-64 w-[calc(100%-16rem)] flex flex-col h-screen overflow-y-auto bg-surface-bright">
+<!-- TopAppBar (Shared Component JSON) -->
+<header class="bg-surface docked full-width top-0 sticky z-40 border-b border-outline-variant flex justify-between items-center px-md h-16 w-full">
+<!-- Search (Left aligned as per JSON) -->
+<div class="flex-grow max-w-md relative">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-full py-[6px] pl-10 pr-sm font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-shadow" placeholder="Search resources..." type="text"/>
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-md">
+<button class="text-primary font-label-md text-label-md hover:text-primary-container transition-colors">
+                    New Session
+                </button>
+<div class="flex items-center gap-sm text-on-surface-variant">
+<button class="hover:text-primary hover:bg-surface-container-low rounded-full p-1 transition-colors"><span class="material-symbols-outlined">help</span></button>
+</div>
+</div>
+</header>
+<!-- Canvas Area -->
+<main class="flex-grow p-md lg:p-lg w-full max-w-[1280px] mx-auto flex flex-col gap-lg">
+<!-- Generation Control Deck (Level 1 Elevation) -->
+<section class="bg-surface-container-lowest rounded-xl border border-outline-variant p-md shadow-[0_2px_4px_rgba(0,32,69,0.05)] w-full">
+<div class="flex flex-col md:flex-row items-end gap-md w-full">
+<!-- Topic Input -->
+<div class="flex flex-col gap-base flex-grow w-full">
+<label class="font-label-sm text-label-sm text-on-surface-variant" for="topic-input">Topic or Question</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">psychology</span>
+<input class="w-full border border-outline-variant rounded-lg py-[10px] pl-10 pr-sm font-body-md text-body-md text-on-surface focus:outline-none focus:border-secondary focus:border-2 bg-surface-bright transition-all" id="topic-input" placeholder="e.g., Explain the mechanisms of Action Potentials" type="text"/>
+</div>
+</div>
+<!-- Output Mode Selector -->
+<div class="flex flex-col gap-base w-full md:w-56 flex-shrink-0">
+<label class="font-label-sm text-label-sm text-on-surface-variant" for="output-mode">Output Mode</label>
+<div class="relative">
+<select class="w-full border border-outline-variant rounded-lg py-[10px] pl-sm pr-10 font-body-md text-body-md text-on-surface appearance-none bg-surface-bright focus:outline-none focus:border-secondary focus:border-2 transition-all cursor-pointer" id="output-mode">
+<option value="simple">Simple Explanation</option>
+<option selected="" value="key_concepts">Key Concepts</option>
+<option value="exam">Exam Critical</option>
+<option value="deep_dive">Deep Dive</option>
+</select>
+<span class="material-symbols-outlined absolute right-sm top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Generate Button -->
+<button class="bg-primary text-on-primary font-label-md text-label-md rounded-lg py-[10px] px-lg flex items-center justify-center gap-xs hover:bg-primary-container transition-colors duration-200 flex-shrink-0 h-[46px]">
+<span class="material-symbols-outlined text-[20px]">magic_button</span>
+                        Generate
                     </button>
-                    <button id="bookmark-btn" title="Bookmark this" class="text-on-surface-variant hover:text-primary transition-colors disabled:opacity-40 disabled:cursor-not-allowed" disabled>
-                        <span class="material-symbols-outlined text-[20px]">bookmark</span>
-                    </button>
-                </div>
-            </div>
-            <div id="result-area" class="p-md lg:p-lg overflow-y-auto flex-grow prose-sc font-body-md text-on-surface">
-                <div class="bg-surface-container-low border border-outline-variant rounded-lg p-md flex items-start gap-sm">
-                    <span class="material-symbols-outlined text-secondary mt-[2px]">info</span>
-                    <div>
-                        <strong class="font-label-md text-label-md text-on-surface block mb-[2px]">Welcome</strong>
-                        <span class="font-body-sm text-on-surface-variant">Enter a topic above and hit <b>Generate</b>. The model will retrieve from your indexed sources and produce study material in the selected mode.</span>
-                    </div>
-                </div>
-            </div>
-        </article>
-
-        <!-- Right column -->
-        <aside class="col-span-12 lg:col-span-4 flex flex-col gap-md">
-            <!-- Quick Actions -->
-            <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-level-1 p-md">
-                <div class="flex items-center gap-xs mb-sm">
-                    <span class="material-symbols-outlined text-on-surface-variant text-[20px]">bolt</span>
-                    <h3 class="font-label-md text-label-md text-on-surface m-0">Quick Actions</h3>
-                </div>
-                <p class="font-body-sm text-on-surface-variant mb-sm">Modify the current generated content.</p>
-                <div class="flex flex-wrap gap-xs" id="quick-actions">
-                    <button data-action="summarize" class="qa-btn border border-primary text-primary hover:bg-surface-container-high font-label-sm text-label-sm rounded-lg px-sm py-[6px] transition-colors flex items-center gap-xs disabled:opacity-40 disabled:cursor-not-allowed" disabled>
-                        <span class="material-symbols-outlined text-[16px]">short_text</span> Summarize
-                    </button>
-                    <button data-action="simplify" class="qa-btn border border-primary text-primary hover:bg-surface-container-high font-label-sm text-label-sm rounded-lg px-sm py-[6px] transition-colors flex items-center gap-xs disabled:opacity-40 disabled:cursor-not-allowed" disabled>
-                        <span class="material-symbols-outlined text-[16px]">child_care</span> Simplify
-                    </button>
-                    <button data-action="elaborate" class="qa-btn border border-primary text-primary hover:bg-surface-container-high font-label-sm text-label-sm rounded-lg px-sm py-[6px] transition-colors flex items-center gap-xs disabled:opacity-40 disabled:cursor-not-allowed" disabled>
-                        <span class="material-symbols-outlined text-[16px]">unfold_more</span> Elaborate
-                    </button>
-                    <button data-action="make-flashcards" class="qa-btn border border-primary text-primary hover:bg-surface-container-high font-label-sm text-label-sm rounded-lg px-sm py-[6px] transition-colors flex items-center gap-xs disabled:opacity-40 disabled:cursor-not-allowed" disabled>
-                        <span class="material-symbols-outlined text-[16px]">style</span> Make Flashcards
-                    </button>
-                    <div class="flex items-center gap-xs w-full mt-xs">
-                        <input id="translate-lang" type="text" value="Spanish" placeholder="Language"
-                               class="flex-grow border border-outline-variant rounded-lg py-[5px] px-sm font-body-sm text-body-sm bg-surface-bright focus:outline-none focus:border-secondary" />
-                        <button data-action="translate" class="qa-btn border border-outline-variant text-on-surface-variant hover:bg-surface-container-low font-label-sm text-label-sm rounded-lg px-sm py-[6px] transition-colors flex items-center gap-xs disabled:opacity-40 disabled:cursor-not-allowed" disabled>
-                            <span class="material-symbols-outlined text-[16px]">translate</span> Translate
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Cited Sources -->
-            <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-level-1 p-md flex-grow">
-                <div class="flex justify-between items-center mb-sm border-b border-outline-variant pb-xs">
-                    <div class="flex items-center gap-xs">
-                        <span class="material-symbols-outlined text-on-surface-variant text-[20px]">menu_book</span>
-                        <h3 class="font-label-md text-label-md text-on-surface m-0">Cited Sources</h3>
-                    </div>
-                    <span id="sources-count" class="bg-surface-container-high text-primary font-label-sm text-label-sm px-[6px] py-[2px] rounded">0</span>
-                </div>
-                <div id="sources-list" class="flex flex-col gap-xs mt-sm">
-                    <p class="font-body-sm text-on-surface-variant">Sources will appear once you generate from indexed material.</p>
-                </div>
-            </div>
-        </aside>
-    </div>
-
-    <!-- Quick mode chips -->
-    <section class="mt-xs">
-        <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-xs">Quick modes</p>
-        <div class="flex flex-wrap gap-xs">
-            <button data-quick="simple_explanation" class="qm-btn bg-surface-container-lowest border border-outline-variant hover:border-primary hover:bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg px-sm py-xs flex items-center gap-xs transition-colors">
-                <span class="material-symbols-outlined text-[16px] text-secondary">menu_book</span> Simple
-            </button>
-            <button data-quick="key_concepts" class="qm-btn bg-surface-container-lowest border border-outline-variant hover:border-primary hover:bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg px-sm py-xs flex items-center gap-xs transition-colors">
-                <span class="material-symbols-outlined text-[16px] text-secondary">key</span> Key Points
-            </button>
-            <button data-quick="exam_critical" class="qm-btn bg-surface-container-lowest border border-outline-variant hover:border-primary hover:bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg px-sm py-xs flex items-center gap-xs transition-colors">
-                <span class="material-symbols-outlined text-[16px] text-secondary">bolt</span> Exam Critical
-            </button>
-            <button data-quick="mnemonics" class="qm-btn bg-surface-container-lowest border border-outline-variant hover:border-primary hover:bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg px-sm py-xs flex items-center gap-xs transition-colors">
-                <span class="material-symbols-outlined text-[16px] text-secondary">psychology</span> Mnemonics
-            </button>
-            <button data-quick="concept_map" class="qm-btn bg-surface-container-lowest border border-outline-variant hover:border-primary hover:bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg px-sm py-xs flex items-center gap-xs transition-colors">
-                <span class="material-symbols-outlined text-[16px] text-secondary">account_tree</span> Concept Map
-            </button>
-        </div>
-    </section>
+</div>
+</section>
+<!-- Workspace Grid -->
+<div class="grid grid-cols-12 gap-gutter flex-grow items-start pb-lg">
+<!-- Main Result Canvas (Spans 8 cols) -->
+<article class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0_2px_4px_rgba(0,32,69,0.05)] h-full min-h-[600px] flex flex-col">
+<!-- Result Header -->
+<div class="px-md py-sm border-b border-outline-variant flex justify-between items-center bg-surface-bright rounded-t-xl">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary">article</span>
+<h2 class="font-label-md text-label-md text-on-surface m-0">Generated Content</h2>
+</div>
+<div class="flex gap-sm">
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">content_copy</span></button>
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">bookmark</span></button>
+</div>
+</div>
+<!-- Markdown Content Area -->
+<div class="p-md lg:p-lg overflow-y-auto flex-grow prose prose-slate max-w-none font-body-md text-on-surface" id="result-area">
+<div class="bg-surface-container-low border border-outline-variant rounded-lg p-md flex gap-sm items-start">
+<span class="material-symbols-outlined text-secondary mt-[2px]">lightbulb</span>
+<div>
+<strong class="font-label-md text-label-md block mb-[4px]">Generate study material</strong>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Type a topic above, pick an output mode, and press <b>Generate</b>. The answer is grounded in the documents you upload from the sidebar — explanations, exam notes, mnemonics, concept maps and more appear here.</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Tools & Context Sidebar (Spans 4 cols) -->
+<aside class="col-span-12 lg:col-span-4 flex flex-col gap-md h-full">
+<!-- Quick Modes Panel -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0_2px_4px_rgba(0,32,69,0.05)] p-md">
+<div class="flex items-center gap-xs mb-sm">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">bolt</span>
+<h3 class="font-label-md text-label-md text-on-surface m-0">Quick Actions</h3>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-sm">Modify the current generated content.</p>
+<div class="flex flex-wrap gap-xs">
+<button class="border border-primary text-primary hover:bg-surface-container-high font-label-sm text-label-sm rounded-lg px-sm py-[6px] transition-colors flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">short_text</span> Summarize
+                            </button>
+<button class="border border-primary text-primary hover:bg-surface-container-high font-label-sm text-label-sm rounded-lg px-sm py-[6px] transition-colors flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">child_care</span> Simplify
+                            </button>
+<button class="border border-primary text-primary hover:bg-surface-container-high font-label-sm text-label-sm rounded-lg px-sm py-[6px] transition-colors flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">format_list_bulleted</span> Make Flashcards
+                            </button>
+<button class="border border-outline-variant text-on-surface-variant hover:bg-surface-container-low font-label-sm text-label-sm rounded-lg px-sm py-[6px] transition-colors flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">translate</span> Translate
+                            </button>
+</div>
+</div>
+<!-- Sources / Citations Panel -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0_2px_4px_rgba(0,32,69,0.05)] p-md flex-grow">
+<div class="flex justify-between items-center mb-sm border-b border-outline-variant pb-xs">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">menu_book</span>
+<h3 class="font-label-md text-label-md text-on-surface m-0">Cited Sources</h3>
+</div>
+<span class="bg-surface-container-high text-primary font-label-sm text-label-sm px-[6px] py-[2px] rounded" id="sources-count">0</span>
+</div>
+<div class="flex flex-col gap-xs mt-sm" id="sources-list">
+<p class="font-body-sm text-body-sm text-on-surface-variant">The documents and pages the model actually used will be listed here after you generate, each with a relevance score so you can verify the answer against your material.</p>
+</div>
+</div>
+</aside>
+</div>
 </main>
+</div>
 
-<script src="/static/shell.js"></script>
 <script src="/static/api.js"></script>
+<script src="/static/hooks.js"></script>
 <script src="/static/study.js"></script>
-</body>
-</html>
+</body></html>

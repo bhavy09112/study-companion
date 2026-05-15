@@ -19,6 +19,12 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
+# Prefer locally-cached HF models; never block on network at request time.
+# Set STUDY_COMPANION_ALLOW_HF_DOWNLOAD=1 to allow downloads (first-time setup).
+if os.getenv("STUDY_COMPANION_ALLOW_HF_DOWNLOAD") != "1":
+    os.environ.setdefault("HF_HUB_OFFLINE", "1")
+    os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
+
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, HTMLResponse
@@ -159,6 +165,8 @@ def get_retriever():
             _retriever.load()
         except FileNotFoundError:
             pass
+        except Exception as e:  # offline / model not cached — degrade, don't crash
+            print(f"Retriever load failed (degraded mode): {e}", file=sys.stderr)
     return _retriever
 
 
@@ -809,15 +817,36 @@ async def remove_bookmark(bookmark_id: str):
 
 @app.get("/health", response_model=HealthResponse)
 async def health_check():
+    """Never 500 — the entire UI polls this on load."""
     from srs.db import get_card_count
-    engine = get_engine()
-    retriever = get_retriever()
-    health = engine.health_check()
+
+    model_loaded = False
+    model_name = ""
+    vram = 0.0
+    try:
+        health = get_engine().health_check()
+        model_loaded = health["model_loaded"]
+        model_name = health.get("model_name", "")
+        vram = health.get("vram_used_gb", 0.0)
+    except Exception as e:
+        print(f"Engine health failed: {e}", file=sys.stderr)
+
+    index_size = 0
+    try:
+        index_size = get_retriever().index_size
+    except Exception as e:
+        print(f"Retriever health failed: {e}", file=sys.stderr)
+
+    try:
+        db_cards = get_card_count()
+    except Exception:
+        db_cards = 0
+
     return HealthResponse(
-        model_loaded=health["model_loaded"],
-        model_name=health.get("model_name", ""),
-        vram_used_gb=health.get("vram_used_gb", 0.0),
-        index_size=retriever.index_size,
-        db_cards=get_card_count(),
-        status="ok" if health["model_loaded"] else "degraded",
+        model_loaded=model_loaded,
+        model_name=model_name,
+        vram_used_gb=vram,
+        index_size=index_size,
+        db_cards=db_cards,
+        status="ok" if model_loaded else "degraded",
     )

@@ -1,180 +1,339 @@
 <!DOCTYPE html>
-<html lang="en" class="light">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Study Companion AI · Progress</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&family=Literata:wght@400;500&display=swap" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-<script src="/static/theme.js"></script>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Progress - Study Companion AI</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link rel="stylesheet" href="/static/styles.css" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&amp;family=Literata:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "surface-variant": "#d5e3fd",
+                        "on-secondary-container": "#003c70",
+                        "on-secondary-fixed": "#001c39",
+                        "surface-container": "#e6eeff",
+                        "secondary-fixed": "#d4e3ff",
+                        "outline": "#74777f",
+                        "inverse-surface": "#233144",
+                        "on-tertiary-fixed": "#171c1f",
+                        "tertiary-fixed-dim": "#c3c7cb",
+                        "primary-container": "#1a365d",
+                        "surface-bright": "#f8f9ff",
+                        "on-primary-fixed": "#001b3c",
+                        "tertiary-fixed": "#dfe3e7",
+                        "surface-container-low": "#eff4ff",
+                        "outline-variant": "#c4c6cf",
+                        "on-primary-container": "#86a0cd",
+                        "surface-container-highest": "#d5e3fd",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#a4c9ff",
+                        "on-secondary-fixed-variant": "#004883",
+                        "on-tertiary-fixed-variant": "#43474b",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#d6e3ff",
+                        "inverse-primary": "#adc7f7",
+                        "tertiary-container": "#313639",
+                        "tertiary": "#1c2124",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#64a8fe",
+                        "on-background": "#0d1c2f",
+                        "surface-tint": "#455f88",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#dde9ff",
+                        "on-surface": "#0d1c2f",
+                        "on-primary-fixed-variant": "#2d476f",
+                        "surface-dim": "#ccdbf4",
+                        "surface": "#f8f9ff",
+                        "secondary": "#0060ac",
+                        "primary-fixed-dim": "#adc7f7",
+                        "inverse-on-surface": "#ebf1ff",
+                        "error": "#ba1a1a",
+                        "primary": "#002045",
+                        "on-surface-variant": "#43474e",
+                        "background": "#f8f9ff",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#9a9fa3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "xs": "8px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "48px",
+                        "base": "4px",
+                        "sm": "16px",
+                        "lg": "40px",
+                        "xl": "64px",
+                        "gutter": "24px",
+                        "md": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Hanken Grotesk"],
+                        "label-md": ["Hanken Grotesk"],
+                        "headline-xl": ["Hanken Grotesk"],
+                        "label-sm": ["Hanken Grotesk"],
+                        "body-sm": ["Literata"],
+                        "body-md": ["Literata"],
+                        "headline-lg-mobile": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined[data-weight="fill"] {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for minimalism */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #dfe3e7; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #c3c7cb; }
+    </style>
 </head>
-<body data-page="progress" class="bg-background text-on-surface font-body-md min-h-screen">
-<div id="shell-root"></div>
-
-<main class="ml-64 px-md lg:px-margin-desktop max-w-7xl mx-auto pb-xl">
-    <div class="mt-md mb-lg flex justify-between items-end">
-        <div>
-            <h2 class="font-headline-lg text-headline-lg text-primary m-0">Dashboard Metrics</h2>
-            <p class="font-body-md text-on-surface-variant mt-xs">Track your cognitive load, mastery, and system health.</p>
-        </div>
-        <button id="refresh-dash" class="border border-outline-variant text-primary font-label-md text-label-md py-xs px-sm rounded hover:bg-surface-container-low transition-colors flex items-center gap-xs">
-            <span class="material-symbols-outlined text-sm">refresh</span> Refresh
-        </button>
-    </div>
-
-    <!-- Row 1: top metrics -->
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
-        <div class="col-span-1 md:col-span-4 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-level-1 p-md hover:shadow-level-2 transition-shadow duration-300 flex flex-col justify-between">
-            <div>
-                <div class="flex items-center justify-between mb-sm">
-                    <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Study Time</span>
-                    <span class="material-symbols-outlined text-secondary">schedule</span>
-                </div>
-                <div class="font-headline-xl text-headline-xl font-bold text-primary mb-1">
-                    <span id="m-hours">0.0</span><span class="text-[20px] font-medium text-on-surface-variant ml-1">hrs</span>
-                </div>
-                <p class="font-body-sm text-secondary">+<span id="m-week">0.0</span> hrs this week</p>
-            </div>
-            <div class="mt-md">
-                <div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant mb-1">
-                    <span>Weekly Goal</span>
-                    <span><span id="m-goal-pct">0</span>%</span>
-                </div>
-                <div class="h-2 w-full bg-tertiary-fixed rounded-full overflow-hidden">
-                    <div id="m-goal-bar" class="h-full bg-secondary rounded-full" style="width: 0%"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-span-1 md:col-span-4 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-level-1 p-md hover:shadow-level-2 transition-shadow duration-300 flex flex-col justify-between relative overflow-hidden">
-            <div class="absolute -right-8 -top-8 w-32 h-32 bg-primary-fixed-dim rounded-full opacity-20 blur-2xl"></div>
-            <div class="relative z-10">
-                <div class="flex items-center justify-between mb-sm">
-                    <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Flashcard Mastery</span>
-                    <span class="material-symbols-outlined text-secondary">psychology</span>
-                </div>
-                <div class="font-headline-xl text-headline-xl font-bold text-primary mb-1">
-                    <span id="m-retention">0</span><span class="text-[20px] font-medium text-on-surface-variant ml-1">%</span>
-                </div>
-                <p class="font-body-sm text-on-surface-variant">Retention across all decks</p>
-            </div>
-            <div class="mt-md relative z-10 grid grid-cols-2 gap-xs">
-                <div class="bg-surface rounded-lg p-2 border border-surface-variant">
-                    <span class="block font-label-sm text-on-surface-variant">Review Due</span>
-                    <span class="font-label-md text-primary font-bold"><span id="m-due">0</span> cards</span>
-                </div>
-                <div class="bg-surface rounded-lg p-2 border border-surface-variant">
-                    <span class="block font-label-sm text-on-surface-variant">Mastered</span>
-                    <span class="font-label-md text-secondary font-bold"><span id="m-mastered">0</span> cards</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-span-1 md:col-span-4 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-level-1 p-md hover:shadow-level-2 transition-shadow duration-300 flex flex-col justify-between">
-            <div>
-                <div class="flex items-center justify-between mb-sm">
-                    <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Quiz Performance</span>
-                    <span class="material-symbols-outlined text-secondary">checklist</span>
-                </div>
-                <div class="font-headline-xl text-headline-xl font-bold text-primary mb-1">
-                    <span id="m-grade">—</span>
-                    <span class="text-[20px] font-medium text-on-surface-variant ml-2">Avg</span>
-                </div>
-                <p class="font-body-sm text-on-surface-variant"><span id="m-quiz-detail">No data yet.</span></p>
-            </div>
-            <div class="mt-md flex items-end gap-1 h-12" id="m-sparkline"></div>
-        </div>
-
-        <!-- Row 2: Health + activity -->
-        <div class="col-span-1 md:col-span-5 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-level-1 p-md">
-            <div class="flex items-center gap-xs mb-md border-b border-outline-variant pb-sm">
-                <span class="material-symbols-outlined text-on-secondary-container">database</span>
-                <h3 class="font-label-md text-label-md font-bold text-primary m-0">Model &amp; Index Health</h3>
-            </div>
-            <div class="space-y-3">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-xs">
-                        <span id="h-status-dot" class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span>
-                        <span class="font-body-md text-on-surface">Index Status</span>
-                    </div>
-                    <span id="h-status-pill" class="font-label-md text-label-md bg-surface-container px-2 py-[2px] rounded text-primary">Loading…</span>
-                </div>
-                <div class="flex items-center justify-between">
-                    <span class="font-body-md text-on-surface">Active Model</span>
-                    <span id="h-model" class="font-body-md text-secondary font-medium truncate max-w-[200px]">—</span>
-                </div>
-                <div class="flex items-center justify-between">
-                    <span class="font-body-md text-on-surface">Vector Chunk Count</span>
-                    <span id="h-chunks" class="font-body-md text-on-surface font-medium">0</span>
-                </div>
-                <div class="flex items-center justify-between">
-                    <span class="font-body-md text-on-surface">Total Flashcards</span>
-                    <span id="h-cards" class="font-body-md text-on-surface font-medium">0</span>
-                </div>
-                <div class="flex items-center justify-between">
-                    <span class="font-body-md text-on-surface">Last Sync</span>
-                    <span id="h-sync" class="font-body-md text-on-surface-variant text-sm">just now</span>
-                </div>
-            </div>
-            <div class="mt-md pt-sm border-t border-outline-variant">
-                <button id="h-diagnostics" class="text-secondary font-label-md text-label-md hover:underline flex items-center gap-xs">
-                    Run Diagnostics <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+<body data-page="progress" class="bg-surface text-on-surface font-body-md antialiased min-h-screen relative flex">
+<!-- SideNavBar Component -->
+<!-- SC_SIDEBAR_START -->
+<nav class="bg-surface h-screen w-64 fixed left-0 top-0 border-r border-outline-variant flex flex-col py-md px-sm z-50">
+<a href="/" class="flex items-center gap-xs px-xs mb-lg" style="text-decoration:none;">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary font-bold">SC</div>
+<div>
+<h1 class="font-headline-lg text-primary text-[16px] leading-[20px] m-0 font-bold">Study Companion</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant m-0 uppercase tracking-wider">AI Assistant</p>
+</div>
+</a>
+<button class="bg-primary text-on-primary font-label-md text-label-md rounded-lg py-xs px-sm mb-lg flex items-center justify-center gap-xs hover:bg-primary-container transition-colors duration-200 w-full">
+<span class="material-symbols-outlined text-[18px]">upload_file</span>
+Upload Document
+</button>
+<div class="flex-grow flex flex-col gap-base">
+<a class="flex items-center gap-sm px-sm py-[8px] rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors duration-200" href="/"><span class="material-symbols-outlined">book_2</span><span class="font-label-md text-label-md">Study</span></a>
+<a class="flex items-center gap-sm px-sm py-[8px] rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors duration-200" href="/quiz"><span class="material-symbols-outlined">quiz</span><span class="font-label-md text-label-md">Quiz</span></a>
+<a class="flex items-center gap-sm px-sm py-[8px] rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors duration-200" href="/flashcards"><span class="material-symbols-outlined">style</span><span class="font-label-md text-label-md">Flashcards</span></a>
+<a class="flex items-center gap-sm px-sm py-[8px] rounded-lg text-primary font-bold border-r-2 border-primary bg-surface-container-high transition-all" href="/progress-page"><span class="material-symbols-outlined icon-fill" style="font-variation-settings:'FILL' 1;">analytics</span><span class="font-label-md text-label-md">Progress</span></a>
+<a class="flex items-center gap-sm px-sm py-[8px] rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors duration-200" href="/settings"><span class="material-symbols-outlined">settings</span><span class="font-label-md text-label-md">Settings</span></a>
+</div>
+<div class="border-t border-outline-variant pt-sm mt-sm">
+<a class="flex items-center gap-sm px-sm py-[8px] rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors duration-200" href="/progress-page">
+<span class="material-symbols-outlined">monitor_heart</span>
+<span class="font-label-md text-label-md">System Health</span>
+</a>
+</div>
+</nav>
+<!-- SC_SIDEBAR_END -->
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col ml-64 w-[calc(100%-16rem)]">
+<!-- TopAppBar Component -->
+<header class="bg-surface docked full-width top-0 sticky z-40 border-b border-outline-variant flex justify-between items-center px-md h-16 w-full">
+<!-- Left: Search -->
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-full py-2 pl-10 pr-4 font-body-sm text-body-sm text-on-surface focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-all placeholder:text-on-surface-variant" placeholder="Search resources..." type="text"/>
+</div>
+<!-- Right: Actions & Profile -->
+<div class="flex items-center gap-md">
+<button class="font-label-md text-label-md text-secondary border border-secondary px-sm py-1.5 rounded-lg hover:bg-surface-container-low transition-colors">
+                    New Session
                 </button>
-            </div>
-        </div>
-
-        <div class="col-span-1 md:col-span-7 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-level-1 p-md">
-            <div class="flex items-center justify-between mb-md border-b border-outline-variant pb-sm">
-                <h3 class="font-label-md text-label-md font-bold text-primary m-0">Activity Intensity</h3>
-                <select id="heatmap-range" class="bg-surface border-none text-on-surface-variant font-label-sm text-label-sm cursor-pointer outline-none ring-0 focus:ring-0">
-                    <option value="30">Last 30 days</option>
-                    <option value="14">Last 14 days</option>
-                    <option value="7">Last 7 days</option>
-                </select>
-            </div>
-            <div id="heatmap-bars" class="h-48 w-full flex items-end justify-between gap-1 pb-2"></div>
-            <div class="flex justify-between text-on-surface-variant font-label-sm text-label-sm mt-2">
-                <span id="heatmap-start">—</span>
-                <span id="heatmap-end">—</span>
-            </div>
-        </div>
-
-        <!-- Topic mastery -->
-        <div class="col-span-1 md:col-span-12 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-level-1 p-md">
-            <div class="flex items-center gap-xs mb-md border-b border-outline-variant pb-sm">
-                <span class="material-symbols-outlined text-on-secondary-container">school</span>
-                <h3 class="font-label-md text-label-md font-bold text-primary m-0">Topic Mastery</h3>
-            </div>
-            <div id="topic-mastery" class="flex flex-col gap-sm">
-                <p class="font-body-sm text-on-surface-variant">No topics tracked yet.</p>
-            </div>
-        </div>
-
-        <!-- Recent sessions -->
-        <div class="col-span-1 md:col-span-12 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-level-1 overflow-hidden">
-            <div class="p-md border-b border-outline-variant flex items-center justify-between">
-                <h3 class="font-label-md text-label-md font-bold text-primary m-0">Recent Study Sessions</h3>
-                <button id="sessions-refresh" class="text-secondary font-label-sm text-label-sm hover:underline">Refresh</button>
-            </div>
-            <div class="w-full">
-                <div class="grid grid-cols-12 gap-md px-md py-sm bg-surface-bright border-b border-surface-variant font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
-                    <div class="col-span-5">Topic / Activity</div>
-                    <div class="col-span-3">Date</div>
-                    <div class="col-span-2">Duration</div>
-                    <div class="col-span-2 text-right">Impact</div>
-                </div>
-                <div id="sessions-list" class="divide-y divide-surface-variant"></div>
-            </div>
-        </div>
-    </div>
+<div class="flex items-center gap-xs text-on-surface-variant">
+<button class="p-1.5 rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Dashboard Canvas -->
+<main class="flex-1 px-md py-lg max-w-7xl mx-auto w-full">
+<div class="mb-lg">
+<h2 class="font-headline-lg text-headline-lg font-bold text-primary tracking-tight">Dashboard Metrics</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Track your cognitive load, mastery, and system health.</p>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Row 1: High Level Metrics -->
+<!-- Metric 1 -->
+<div class="col-span-1 md:col-span-4 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-[0_2px_4px_rgba(0,32,69,0.05)] p-md hover:shadow-[0_10px_25px_rgba(0,32,69,0.1)] transition-shadow duration-300 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-sm">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Study Progress</span>
+<span class="material-symbols-outlined text-secondary">schedule</span>
+</div>
+<div class="font-headline-xl text-headline-xl font-bold text-primary mb-1">0.0<span class="text-[20px] font-medium text-on-surface-variant ml-1">hrs</span></div>
+<p class="font-body-sm text-body-sm text-secondary">Upload material and start studying</p>
+</div>
+<div class="mt-lg">
+<div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant mb-2">
+<span>Weekly Goal</span>
+<span>85%</span>
+</div>
+<div class="h-xs w-full bg-tertiary-fixed rounded-full overflow-hidden">
+<div class="h-full bg-secondary rounded-full w-[85%]"></div>
+</div>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="col-span-1 md:col-span-4 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-[0_2px_4px_rgba(0,32,69,0.05)] p-md hover:shadow-[0_10px_25px_rgba(0,32,69,0.1)] transition-shadow duration-300 flex flex-col justify-between relative overflow-hidden">
+<!-- Subtle background decoration -->
+<div class="absolute -right-8 -top-8 w-32 h-32 bg-primary-fixed-dim rounded-full opacity-20 blur-2xl"></div>
+<div class="relative z-10">
+<div class="flex items-center justify-between mb-sm">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Flashcard Mastery</span>
+<span class="material-symbols-outlined text-secondary">psychology</span>
+</div>
+<div class="font-headline-xl text-headline-xl font-bold text-primary mb-1">0<span class="text-[20px] font-medium text-on-surface-variant ml-1">%</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">No reviews recorded yet</p>
+</div>
+<div class="mt-lg relative z-10 grid grid-cols-2 gap-xs">
+<div class="bg-surface rounded-lg p-2 border border-surface-variant">
+<span class="block font-label-sm text-label-sm text-on-surface-variant">Review Due</span>
+<span class="font-label-md text-label-md font-bold text-primary">24 cards</span>
+</div>
+<div class="bg-surface rounded-lg p-2 border border-surface-variant">
+<span class="block font-label-sm text-label-sm text-on-surface-variant">Mastered</span>
+<span class="font-label-md text-label-md font-bold text-secondary">842 cards</span>
+</div>
+</div>
+</div>
+<!-- Metric 3 -->
+<div class="col-span-1 md:col-span-4 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-[0_2px_4px_rgba(0,32,69,0.05)] p-md hover:shadow-[0_10px_25px_rgba(0,32,69,0.1)] transition-shadow duration-300 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-sm">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Quiz Performance</span>
+<span class="material-symbols-outlined text-secondary">checklist</span>
+</div>
+<div class="font-headline-xl text-headline-xl font-bold text-primary mb-1">&mdash;<span class="text-[20px] font-medium text-on-surface-variant ml-2">Avg</span></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Take a quiz to start tracking</p>
+</div>
+<div class="mt-lg flex items-end gap-1 h-12">
+<!-- Mockup sparkline chart -->
+<div class="w-full bg-surface-container h-4 rounded-t-sm"></div>
+<div class="w-full bg-secondary-container h-8 rounded-t-sm"></div>
+<div class="w-full bg-surface-container h-6 rounded-t-sm"></div>
+<div class="w-full bg-secondary-container h-10 rounded-t-sm"></div>
+<div class="w-full bg-secondary h-12 rounded-t-sm"></div>
+<div class="w-full bg-surface-container h-5 rounded-t-sm"></div>
+<div class="w-full bg-secondary-container h-9 rounded-t-sm"></div>
+</div>
+</div>
+<!-- Row 2: Deep Dive Data -->
+<!-- System Health Card -->
+<div class="col-span-1 md:col-span-5 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-[0_2px_4px_rgba(0,32,69,0.05)] p-md">
+<div class="flex items-center gap-2 mb-md border-b border-outline-variant pb-sm">
+<span class="material-symbols-outlined text-on-secondary-container">database</span>
+<h3 class="font-label-md text-label-md font-bold text-primary">Model &amp; Index Health</h3>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-[#10b981]"></span> <!-- Green generic indicator for health, keeping it raw hex as it's a specific status color not in theme, though ideally I'd use theme. Let's use secondary -->
+<span class="font-body-md text-body-md text-on-surface">Index Status</span>
+</div>
+<span class="font-label-md text-label-md bg-surface-container px-2 py-0.5 rounded text-primary">Healthy</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-body-md text-body-md text-on-surface">Active Model</span>
+<span class="font-body-md text-body-md text-secondary font-medium">&mdash;</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-body-md text-body-md text-on-surface">Vector Chunk Count</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">0</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-body-md text-body-md text-on-surface">Last Sync</span>
+<span class="font-body-md text-body-md text-on-surface-variant text-sm">&mdash;</span>
+</div>
+</div>
+<div class="mt-md pt-sm border-t border-outline-variant">
+<button class="text-secondary font-label-md text-label-md hover:underline flex items-center gap-1">
+                            Run Diagnostics
+                            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Study Activity Heatmap/Chart Area -->
+<div class="col-span-1 md:col-span-7 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-[0_2px_4px_rgba(0,32,69,0.05)] p-md">
+<div class="flex items-center justify-between mb-md border-b border-outline-variant pb-sm">
+<h3 class="font-label-md text-label-md font-bold text-primary">Activity Intensity</h3>
+<select class="bg-surface border-none text-on-surface-variant font-label-sm text-label-sm cursor-pointer outline-none ring-0 focus:ring-0">
+<option>Last 30 Days</option>
+<option>This Week</option>
+</select>
+</div>
+<!-- Abstract representation of an activity chart using grid -->
+<div class="h-48 w-full flex items-end justify-between gap-1 pb-2">
+<div class="w-full bg-surface-container h-[20%] rounded-t hover:bg-secondary-fixed transition-colors"></div>
+<div class="w-full bg-surface-container h-[40%] rounded-t hover:bg-secondary-fixed transition-colors"></div>
+<div class="w-full bg-secondary-container h-[70%] rounded-t hover:bg-secondary transition-colors"></div>
+<div class="w-full bg-surface-container h-[30%] rounded-t hover:bg-secondary-fixed transition-colors"></div>
+<div class="w-full bg-secondary-container h-[85%] rounded-t hover:bg-secondary transition-colors"></div>
+<div class="w-full bg-secondary h-[100%] rounded-t hover:bg-primary transition-colors relative group">
+<!-- Tooltip mockup -->
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface font-label-sm text-label-sm px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">Peak Focus: 4h</div>
+</div>
+<div class="w-full bg-surface-container h-[50%] rounded-t hover:bg-secondary-fixed transition-colors"></div>
+<div class="w-full bg-secondary-container h-[60%] rounded-t hover:bg-secondary transition-colors"></div>
+<div class="w-full bg-surface-container h-[20%] rounded-t hover:bg-secondary-fixed transition-colors"></div>
+<div class="w-full bg-surface-container h-[10%] rounded-t hover:bg-secondary-fixed transition-colors"></div>
+<div class="w-full bg-secondary-container h-[45%] rounded-t hover:bg-secondary transition-colors"></div>
+<div class="w-full bg-surface-container h-[35%] rounded-t hover:bg-secondary-fixed transition-colors"></div>
+</div>
+<div class="flex justify-between text-on-surface-variant font-label-sm text-label-sm mt-2">
+<span>Nov 1</span>
+<span>Nov 15</span>
+<span>Nov 30</span>
+</div>
+</div>
+<!-- Row 3: Recent Sessions (Full Width List) -->
+<div class="col-span-1 md:col-span-12 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-[0_2px_4px_rgba(0,32,69,0.05)] overflow-hidden">
+<div class="p-md border-b border-outline-variant flex items-center justify-between">
+<h3 class="font-label-md text-label-md font-bold text-primary">Recent Study Sessions</h3>
+<button class="text-secondary font-label-sm text-label-sm hover:underline">View All</button>
+</div>
+<div class="w-full">
+<!-- Table Header -->
+<div class="grid grid-cols-12 gap-4 px-md py-sm bg-surface-bright border-b border-surface-variant font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+<div class="col-span-5">Topic / Document</div>
+<div class="col-span-3">Date</div>
+<div class="col-span-2">Duration</div>
+<div class="col-span-2 text-right">Impact Score</div>
+</div>
+<!-- List Items -->
+<div class="divide-y divide-surface-variant">
+<div class="px-md py-lg text-center font-body-sm text-on-surface-variant">
+Your study, quiz, and flashcard sessions will be logged here — each with its duration and an impact score so you can see what moved your mastery the most.
+</div>
+</div>
+</div>
+</div>
+</div>
 </main>
+</div>
 
-<script src="/static/shell.js"></script>
 <script src="/static/api.js"></script>
+<script src="/static/hooks.js"></script>
 <script src="/static/progress.js"></script>
-</body>
-</html>
+</body></html>

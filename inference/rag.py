@@ -66,8 +66,14 @@ class HybridRetriever:
                 self.bm25_chunks = data["chunks"]
             print(f"BM25 loaded: {len(self.bm25_chunks)} documents", file=sys.stderr)
 
-        # Encoder
-        self.encoder = SentenceTransformer(self.model_name)
+        # Encoder — prefer the local HF cache; only hit the network if
+        # explicitly allowed. Avoids a hard failure when offline.
+        try:
+            self.encoder = SentenceTransformer(self.model_name)
+        except Exception:
+            self.encoder = SentenceTransformer(
+                self.model_name, local_files_only=True
+            )
         self._loaded = True
 
     @property

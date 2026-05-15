@@ -1,147 +1,253 @@
 <!DOCTYPE html>
-<html lang="en" class="light">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Study Companion AI · Flashcards</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&family=Literata:wght@400;500&display=swap" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-<script src="/static/theme.js"></script>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Study Companion - Flashcards</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link rel="stylesheet" href="/static/styles.css" />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&amp;family=Literata:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "surface-variant": "#d5e3fd",
+                        "on-secondary-container": "#003c70",
+                        "on-secondary-fixed": "#001c39",
+                        "surface-container": "#e6eeff",
+                        "secondary-fixed": "#d4e3ff",
+                        "outline": "#74777f",
+                        "inverse-surface": "#233144",
+                        "on-tertiary-fixed": "#171c1f",
+                        "tertiary-fixed-dim": "#c3c7cb",
+                        "primary-container": "#1a365d",
+                        "surface-bright": "#f8f9ff",
+                        "on-primary-fixed": "#001b3c",
+                        "tertiary-fixed": "#dfe3e7",
+                        "surface-container-low": "#eff4ff",
+                        "outline-variant": "#c4c6cf",
+                        "on-primary-container": "#86a0cd",
+                        "surface-container-highest": "#d5e3fd",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#a4c9ff",
+                        "on-secondary-fixed-variant": "#004883",
+                        "on-tertiary-fixed-variant": "#43474b",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#d6e3ff",
+                        "inverse-primary": "#adc7f7",
+                        "tertiary-container": "#313639",
+                        "tertiary": "#1c2124",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#64a8fe",
+                        "on-background": "#0d1c2f",
+                        "surface-tint": "#455f88",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#dde9ff",
+                        "on-surface": "#0d1c2f",
+                        "on-primary-fixed-variant": "#2d476f",
+                        "surface-dim": "#ccdbf4",
+                        "surface": "#f8f9ff",
+                        "secondary": "#0060ac",
+                        "primary-fixed-dim": "#adc7f7",
+                        "inverse-on-surface": "#ebf1ff",
+                        "error": "#ba1a1a",
+                        "primary": "#002045",
+                        "on-surface-variant": "#43474e",
+                        "background": "#f8f9ff",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#9a9fa3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "xs": "8px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "48px",
+                        "base": "4px",
+                        "sm": "16px",
+                        "lg": "40px",
+                        "xl": "64px",
+                        "gutter": "24px",
+                        "md": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Hanken Grotesk"],
+                        "label-md": ["Hanken Grotesk"],
+                        "headline-xl": ["Hanken Grotesk"],
+                        "label-sm": ["Hanken Grotesk"],
+                        "body-sm": ["Literata"],
+                        "body-md": ["Literata"],
+                        "headline-lg-mobile": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Literata', serif; }
+        h1, h2, h3, h4, h5, h6, .font-hanken { font-family: 'Hanken Grotesk', sans-serif; }
+    </style>
 </head>
-<body data-page="flashcards" class="bg-background text-on-surface font-body-md min-h-screen">
-<div id="shell-root"></div>
-
-<main class="ml-64 px-md lg:px-margin-desktop max-w-[1024px] mx-auto pb-xl">
-    <!-- Header -->
-    <div class="flex items-end justify-between mt-md mb-lg">
-        <div>
-            <div class="flex items-center gap-xs mb-xs">
-                <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">Deck Review</span>
-                <span class="material-symbols-outlined text-[14px] text-on-surface-variant">chevron_right</span>
-                <span id="deck-name" class="font-label-sm text-label-sm text-primary font-bold">All Cards</span>
-            </div>
-            <h2 class="font-headline-xl text-headline-xl text-on-surface m-0">Spaced Repetition</h2>
-        </div>
-        <div id="due-badge" class="flex items-center gap-sm bg-error-container text-on-error-container px-sm py-xs rounded-lg border border-[#ffb4ab]">
-            <span class="material-symbols-outlined icon-fill">assignment_late</span>
-            <div class="flex flex-col">
-                <span id="due-count" class="font-headline-lg text-[20px] leading-tight font-bold">0</span>
-                <span class="font-label-sm text-[10px] uppercase tracking-wider opacity-80">Review Due</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Empty state -->
-    <div id="fc-empty" class="hidden bg-surface-container-lowest border border-outline-variant rounded-xl p-xl text-center">
-        <span class="material-symbols-outlined text-[48px] text-secondary mb-sm block">celebration</span>
-        <h3 class="font-headline-lg text-on-surface mt-xs">No cards due right now</h3>
-        <p class="font-body-md text-on-surface-variant mt-xs max-w-md mx-auto">
-            Generate study material and use <strong>Make Flashcards</strong> on the Study page, or upload more material and try a different topic.
-        </p>
-        <div class="flex gap-xs justify-center mt-md">
-            <a href="/" class="bg-primary text-on-primary font-label-md text-label-md py-xs px-md rounded hover:bg-primary-container transition-colors flex items-center gap-xs">
-                <span class="material-symbols-outlined text-sm">book_2</span> Open Study
-            </a>
-            <button id="export-anki-empty" class="border border-outline-variant text-primary font-label-md text-label-md py-xs px-md rounded hover:bg-surface-container-low transition-colors flex items-center gap-xs">
-                <span class="material-symbols-outlined text-sm">download</span> Export Anki
+<body data-page="flashcards" class="bg-background text-on-background antialiased h-screen overflow-hidden flex">
+<!-- SideNavBar -->
+<!-- SC_SIDEBAR_START -->
+<nav class="bg-surface h-screen w-64 fixed left-0 top-0 border-r border-outline-variant flex flex-col py-md px-sm z-50">
+<a href="/" class="flex items-center gap-xs px-xs mb-lg" style="text-decoration:none;">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary font-bold">SC</div>
+<div>
+<h1 class="font-headline-lg text-primary text-[16px] leading-[20px] m-0 font-bold">Study Companion</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant m-0 uppercase tracking-wider">AI Assistant</p>
+</div>
+</a>
+<button class="bg-primary text-on-primary font-label-md text-label-md rounded-lg py-xs px-sm mb-lg flex items-center justify-center gap-xs hover:bg-primary-container transition-colors duration-200 w-full">
+<span class="material-symbols-outlined text-[18px]">upload_file</span>
+Upload Document
+</button>
+<div class="flex-grow flex flex-col gap-base">
+<a class="flex items-center gap-sm px-sm py-[8px] rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors duration-200" href="/"><span class="material-symbols-outlined">book_2</span><span class="font-label-md text-label-md">Study</span></a>
+<a class="flex items-center gap-sm px-sm py-[8px] rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors duration-200" href="/quiz"><span class="material-symbols-outlined">quiz</span><span class="font-label-md text-label-md">Quiz</span></a>
+<a class="flex items-center gap-sm px-sm py-[8px] rounded-lg text-primary font-bold border-r-2 border-primary bg-surface-container-high transition-all" href="/flashcards"><span class="material-symbols-outlined icon-fill" style="font-variation-settings:'FILL' 1;">style</span><span class="font-label-md text-label-md">Flashcards</span></a>
+<a class="flex items-center gap-sm px-sm py-[8px] rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors duration-200" href="/progress-page"><span class="material-symbols-outlined">analytics</span><span class="font-label-md text-label-md">Progress</span></a>
+<a class="flex items-center gap-sm px-sm py-[8px] rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors duration-200" href="/settings"><span class="material-symbols-outlined">settings</span><span class="font-label-md text-label-md">Settings</span></a>
+</div>
+<div class="border-t border-outline-variant pt-sm mt-sm">
+<a class="flex items-center gap-sm px-sm py-[8px] rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors duration-200" href="/progress-page">
+<span class="material-symbols-outlined">monitor_heart</span>
+<span class="font-label-md text-label-md">System Health</span>
+</a>
+</div>
+</nav>
+<!-- SC_SIDEBAR_END -->
+<!-- TopAppBar -->
+<header class="bg-surface text-primary fixed full-width top-0 z-40 border-b border-outline-variant flex justify-between items-center ml-64 px-md h-16 w-[calc(100%-16rem)] shadow-[0_2px_4px_rgba(0,32,69,0.02)]">
+<!-- Search Area (on_left) -->
+<div class="flex items-center w-96 relative">
+<span class="material-symbols-outlined absolute left-3 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-bright border border-outline-variant rounded-DEFAULT pl-10 pr-4 py-2 font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all" placeholder="Search decks, tags, or content..." type="text"/>
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-md">
+<button class="font-label-md text-label-md text-primary hover:text-secondary transition-colors">
+                New Session
             </button>
-        </div>
-    </div>
-
-    <!-- Active deck -->
-    <div id="fc-active" class="hidden">
-        <!-- Progress -->
-        <div class="flex items-center gap-md mb-xl">
-            <span id="fc-progress-label" class="font-label-sm text-label-sm text-on-surface-variant whitespace-nowrap w-20 text-right">Card 0 of 0</span>
-            <div class="flex-1 h-[6px] bg-tertiary-fixed rounded-full overflow-hidden">
-                <div id="fc-progress-bar" class="bg-secondary h-full w-0 rounded-full transition-all duration-500"></div>
-            </div>
-            <div class="flex gap-xs">
-                <button id="fc-undo" title="Undo last review" class="h-8 w-8 flex items-center justify-center rounded border border-outline-variant text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors">
-                    <span class="material-symbols-outlined text-[18px]">undo</span>
-                </button>
-                <button id="fc-export" title="Export Anki .apkg" class="h-8 w-8 flex items-center justify-center rounded border border-outline-variant text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors">
-                    <span class="material-symbols-outlined text-[18px]">download</span>
-                </button>
-                <button id="fc-skip" title="Skip card" class="h-8 w-8 flex items-center justify-center rounded border border-outline-variant text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors">
-                    <span class="material-symbols-outlined text-[18px]">skip_next</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- Card -->
-        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-level-2 flex flex-col min-h-[460px] relative">
-            <div class="flex-1 p-xl flex flex-col justify-center items-center text-center relative">
-                <div class="absolute top-md left-md bg-surface-container px-3 py-1 rounded-full border border-surface-dim">
-                    <span class="font-label-sm text-on-secondary-container font-bold tracking-wider">Q</span>
-                </div>
-                <span id="fc-topic" class="absolute top-md right-md font-label-sm text-on-surface-variant"></span>
-                <h3 id="fc-front" class="font-headline-lg text-headline-lg text-on-surface max-w-2xl leading-relaxed font-bold"></h3>
-            </div>
-
-            <!-- Reveal toggle -->
-            <div class="w-full px-xl py-xs flex justify-center relative">
-                <div class="w-full border-t border-dashed border-outline-variant absolute top-1/2 left-0"></div>
-                <button id="fc-reveal" class="bg-surface-container-lowest border border-outline text-on-surface-variant font-label-sm text-label-sm px-md py-[6px] rounded-full hover:bg-surface hover:text-primary transition-colors flex items-center gap-xs shadow-sm relative">
-                    <span class="material-symbols-outlined text-[14px]">visibility</span>
-                    Reveal Answer
-                </button>
-            </div>
-
-            <!-- Back -->
-            <div id="fc-back-wrap" class="hidden flex-1 p-xl flex flex-col justify-center items-center text-center bg-surface-bright rounded-b-xl relative border-t border-surface-container">
-                <div class="absolute top-md left-md bg-secondary-container px-3 py-1 rounded-full border border-secondary-fixed">
-                    <span class="font-label-sm text-on-secondary-container font-bold tracking-wider">A</span>
-                </div>
-                <p id="fc-back" class="font-body-md text-on-surface-variant max-w-2xl text-left leading-relaxed"></p>
-            </div>
-
-            <!-- Rating -->
-            <div id="fc-rating" class="hidden p-md bg-surface-container-lowest border-t border-outline-variant rounded-b-xl flex flex-col items-center gap-sm">
-                <span class="font-label-sm text-on-surface-variant">How difficult was it to recall?</span>
-                <div class="flex w-full max-w-md gap-md">
-                    <button data-q="1" class="rate-btn flex-1 py-sm px-md rounded border border-outline-variant bg-surface hover:bg-error-container hover:border-[#ffb4ab] hover:text-on-error-container transition-all flex flex-col items-center justify-center gap-1 group">
-                        <span class="font-label-md text-label-md text-on-surface-variant group-hover:text-on-error-container">Again</span>
-                        <span class="font-label-sm text-[11px] opacity-70">&lt; 1m</span>
+<div class="flex items-center gap-sm border-l border-outline-variant pl-md">
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center h-8 w-8 rounded-full hover:bg-surface-container-low">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 ml-64 mt-16 overflow-y-auto bg-background p-margin-desktop relative">
+<div class="max-w-[1024px] mx-auto">
+<!-- Context Header -->
+<div class="flex items-end justify-between mb-lg">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">Deck Review</span>
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">chevron_right</span>
+<span class="font-label-sm text-label-sm text-primary font-bold">All Cards</span>
+</div>
+<h2 class="font-headline-xl text-headline-xl text-on-surface">Spaced Repetition</h2>
+</div>
+<!-- Review Due Badge -->
+<div class="flex items-center gap-3 bg-error-container text-on-error-container px-sm py-2 rounded-lg border border-[#ffb4ab]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">assignment_late</span>
+<div class="flex flex-col">
+<span class="font-headline-lg text-[20px] leading-tight font-bold">0</span>
+<span class="font-label-sm text-[10px] uppercase tracking-wider opacity-80">Review Due</span>
+</div>
+</div>
+</div>
+<!-- Progress Bar -->
+<div class="flex items-center gap-md mb-xl">
+<span class="font-label-sm text-label-sm text-on-surface-variant whitespace-nowrap w-16 text-right">Card 0 of 0</span>
+<div class="flex-1 h-[6px] bg-tertiary-fixed rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-[28%] rounded-full transition-all duration-500"></div>
+</div>
+<div class="flex gap-2">
+<button class="h-8 w-8 flex items-center justify-center rounded-DEFAULT border border-outline-variant text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">undo</span>
+</button>
+<button class="h-8 w-8 flex items-center justify-center rounded-DEFAULT border border-outline-variant text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+<!-- The Flashcard -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-[0_4px_12px_rgba(0,32,69,0.05)] flex flex-col min-h-[500px] relative transition-all">
+<!-- Front Side (Question) -->
+<div class="flex-1 p-xl flex flex-col justify-center items-center text-center relative z-10">
+<div class="absolute top-md left-md bg-surface-container px-3 py-1 rounded-full border border-surface-dim">
+<span class="font-label-sm text-label-sm text-on-secondary-container font-bold tracking-wider">Q</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface max-w-2xl leading-relaxed">
+                        Explain the mechanism by which action potentials are propagated along a myelinated axon, and identify the key structures involved.
+                    </h3>
+</div>
+<!-- Reveal Toggle Divider (Simulated click area) -->
+<div class="w-full px-xl py-xs flex justify-center relative z-20">
+<div class="w-full border-t border-dashed border-outline-variant absolute top-1/2 left-0 z-0"></div>
+<button class="bg-surface-container-lowest border border-outline text-on-surface-variant font-label-sm text-label-sm px-4 py-1.5 rounded-full z-10 hover:bg-surface hover:text-primary transition-colors flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px]">visibility</span>
+                        Reveal Answer
                     </button>
-                    <button data-q="3" class="rate-btn flex-1 py-sm px-md rounded border border-outline-variant text-on-surface hover:bg-surface-container hover:border-outline transition-all flex flex-col items-center justify-center gap-1">
-                        <span class="font-label-md text-label-md">Hard</span>
-                        <span class="font-label-sm text-[11px] opacity-70">~6m</span>
-                    </button>
-                    <button data-q="4" class="rate-btn flex-1 py-sm px-md rounded border border-primary text-primary hover:bg-primary-container hover:text-on-primary-container transition-all flex flex-col items-center justify-center gap-1">
-                        <span class="font-label-md text-label-md">Good</span>
-                        <span class="font-label-sm text-[11px] opacity-70">~10m</span>
-                    </button>
-                    <button data-q="5" class="rate-btn flex-1 py-sm px-md rounded bg-primary text-on-primary hover:bg-primary-container transition-all shadow-level-1 flex flex-col items-center justify-center gap-1">
-                        <span class="font-label-md text-label-md">Easy</span>
-                        <span class="font-label-sm text-[11px] text-surface-variant">~4d</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Keyboard hint -->
-        <div class="mt-md text-center opacity-70">
-            <p class="font-label-sm text-on-surface-variant">
-                Press
-                <kbd class="px-2 py-1 bg-surface-container border border-outline-variant rounded text-on-surface">Space</kbd>
-                to reveal,
-                <kbd class="px-2 py-1 bg-surface-container border border-outline-variant rounded text-on-surface">1</kbd>
-                <kbd class="px-2 py-1 bg-surface-container border border-outline-variant rounded text-on-surface">2</kbd>
-                <kbd class="px-2 py-1 bg-surface-container border border-outline-variant rounded text-on-surface">3</kbd>
-                <kbd class="px-2 py-1 bg-surface-container border border-outline-variant rounded text-on-surface">4</kbd>
-                to rate.
-            </p>
-        </div>
-    </div>
+</div>
+<!-- Back Side (Answer - shown for context in this unified view) -->
+<div class="flex-1 p-xl flex flex-col justify-center items-center text-center bg-surface-bright rounded-b-xl relative border-t border-surface-container opacity-90">
+<div class="absolute top-md left-md bg-secondary-container px-3 py-1 rounded-full border border-secondary-fixed">
+<span class="font-label-sm text-label-sm text-on-secondary-container font-bold tracking-wider">A</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl text-left leading-relaxed">
+                        Action potentials propagate via <strong class="text-on-surface font-semibold">saltatory conduction</strong>. The myelin sheath insulates the axon, preventing ion leakage. Depolarization only occurs at the <strong class="text-on-surface font-semibold">Nodes of Ranvier</strong>, where voltage-gated Na+ channels are highly concentrated. This causes the signal to "jump" from node to node, significantly increasing conduction velocity and saving cellular energy.
+                    </p>
+</div>
+<!-- Scheduling Action Footer -->
+<div class="p-md bg-surface-container-lowest border-t border-outline-variant rounded-b-xl flex flex-col items-center gap-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant">How difficult was it to recall?</span>
+<div class="flex w-full max-w-md gap-4">
+<button class="flex-1 py-3 px-4 rounded-DEFAULT border border-outline-variant bg-surface hover:bg-error-container hover:border-[#ffb4ab] hover:text-on-error-container transition-all flex flex-col items-center justify-center gap-1 group">
+<span class="font-label-md text-label-md text-on-surface-variant group-hover:text-on-error-container">Hard</span>
+<span class="font-label-sm text-[11px] opacity-70">&lt; 1m</span>
+</button>
+<button class="flex-1 py-3 px-4 rounded-DEFAULT border border-primary text-primary hover:bg-primary-container hover:text-on-primary-container transition-all flex flex-col items-center justify-center gap-1 group">
+<span class="font-label-md text-label-md">Good</span>
+<span class="font-label-sm text-[11px] opacity-70">10m</span>
+</button>
+<button class="flex-1 py-3 px-4 rounded-DEFAULT bg-primary text-on-primary hover:bg-on-primary-fixed-variant transition-all shadow-[0_2px_4px_rgba(0,32,69,0.2)] flex flex-col items-center justify-center gap-1">
+<span class="font-label-md text-label-md">Easy</span>
+<span class="font-label-sm text-[11px] text-surface-variant">4d</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Keyboard Shortcuts Hint -->
+<div class="mt-lg text-center opacity-60">
+<p class="font-label-sm text-label-sm text-on-surface-variant">
+                    Press <kbd class="px-2 py-1 bg-surface-container border border-outline-variant rounded text-on-surface">Space</kbd> to reveal, <kbd class="px-2 py-1 bg-surface-container border border-outline-variant rounded text-on-surface">1</kbd> <kbd class="px-2 py-1 bg-surface-container border border-outline-variant rounded text-on-surface">2</kbd> <kbd class="px-2 py-1 bg-surface-container border border-outline-variant rounded text-on-surface">3</kbd> to rate.
+                </p>
+</div>
+</div>
 </main>
 
-<script src="/static/shell.js"></script>
 <script src="/static/api.js"></script>
+<script src="/static/hooks.js"></script>
 <script src="/static/flashcards.js"></script>
-</body>
-</html>
+</body></html>

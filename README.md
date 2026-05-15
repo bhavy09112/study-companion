@@ -28,7 +28,6 @@ ollama pull mistral
 bash scripts/run_pipeline.sh examples/sample_input.pdf
 
 # 4. Start the app (API + UI on the same port)
-uvicorn api.main:app --port 8000
 ```
 
 Open **<http://localhost:8000>** in your browser.

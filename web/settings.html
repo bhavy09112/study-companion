@@ -1,180 +1,368 @@
 <!DOCTYPE html>
-<html lang="en" class="light">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Study Companion AI · Settings</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&family=Literata:wght@400;500&display=swap" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-<script src="/static/theme.js"></script>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Settings - Study Companion AI</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&amp;family=Literata:opsz,wght@7..72,400&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Custom styling for range sliders based on Style Guidance */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #0060ac; /* secondary */
+            cursor: pointer;
+            margin-top: -4px; /* offset for track height */
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+            background: #1c2124; /* tertiary */
+            border-radius: 4px;
+        }
+        input[type=range]:focus::-webkit-slider-runnable-track {
+            background: #1c2124;
+        }
+    </style>
+<!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link rel="stylesheet" href="/static/styles.css" />
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error-container": "#93000a",
+                    "surface-variant": "#d5e3fd",
+                    "on-secondary-container": "#003c70",
+                    "on-secondary-fixed": "#001c39",
+                    "surface-container": "#e6eeff",
+                    "secondary-fixed": "#d4e3ff",
+                    "outline": "#74777f",
+                    "inverse-surface": "#233144",
+                    "on-tertiary-fixed": "#171c1f",
+                    "tertiary-fixed-dim": "#c3c7cb",
+                    "primary-container": "#1a365d",
+                    "surface-bright": "#f8f9ff",
+                    "on-primary-fixed": "#001b3c",
+                    "tertiary-fixed": "#dfe3e7",
+                    "surface-container-low": "#eff4ff",
+                    "outline-variant": "#c4c6cf",
+                    "on-primary-container": "#86a0cd",
+                    "surface-container-highest": "#d5e3fd",
+                    "on-error": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed-dim": "#a4c9ff",
+                    "on-secondary-fixed-variant": "#004883",
+                    "on-tertiary-fixed-variant": "#43474b",
+                    "on-primary": "#ffffff",
+                    "primary-fixed": "#d6e3ff",
+                    "inverse-primary": "#adc7f7",
+                    "tertiary-container": "#313639",
+                    "tertiary": "#1c2124",
+                    "on-secondary": "#ffffff",
+                    "secondary-container": "#64a8fe",
+                    "on-background": "#0d1c2f",
+                    "surface-tint": "#455f88",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-high": "#dde9ff",
+                    "on-surface": "#0d1c2f",
+                    "on-primary-fixed-variant": "#2d476f",
+                    "surface-dim": "#ccdbf4",
+                    "surface": "#f8f9ff",
+                    "secondary": "#0060ac",
+                    "primary-fixed-dim": "#adc7f7",
+                    "inverse-on-surface": "#ebf1ff",
+                    "error": "#ba1a1a",
+                    "primary": "#002045",
+                    "on-surface-variant": "#43474e",
+                    "background": "#f8f9ff",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-container": "#9a9fa3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "xs": "8px",
+                    "margin-mobile": "16px",
+                    "margin-desktop": "48px",
+                    "base": "4px",
+                    "sm": "16px",
+                    "lg": "40px",
+                    "xl": "64px",
+                    "gutter": "24px",
+                    "md": "24px"
+            },
+            "fontFamily": {
+                    "headline-lg": [
+                            "Hanken Grotesk"
+                    ],
+                    "label-md": [
+                            "Hanken Grotesk"
+                    ],
+                    "headline-xl": [
+                            "Hanken Grotesk"
+                    ],
+                    "label-sm": [
+                            "Hanken Grotesk"
+                    ],
+                    "body-sm": [
+                            "Literata"
+                    ],
+                    "body-md": [
+                            "Literata"
+                    ],
+                    "headline-lg-mobile": [
+                            "Hanken Grotesk"
+                    ]
+            },
+            "fontSize": {
+                    "headline-lg": [
+                            "32px",
+                            {
+                                    "lineHeight": "40px",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "label-md": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "headline-xl": [
+                            "40px",
+                            {
+                                    "lineHeight": "48px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "label-sm": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "body-sm": [
+                            "14px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-lg-mobile": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "600"
+                            }
+                    ]
+            }
+          }
+        }
+      }
+    </script>
 </head>
-<body data-page="settings" class="bg-background text-on-surface font-body-md min-h-screen">
-<div id="shell-root"></div>
-
-<main class="ml-64 px-md lg:px-margin-desktop max-w-[1024px] mx-auto pb-xl">
-    <div class="mt-md mb-xl">
-        <h2 class="font-headline-xl text-headline-xl text-primary m-0">Application Settings</h2>
-        <p class="font-body-md text-on-surface-variant max-w-2xl mt-xs">Configure your local AI environment, adjust model parameters for optimal study generation, and manage your data storage.</p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-lg">
-        <!-- Left: connectivity + model params -->
-        <div class="md:col-span-7 flex flex-col gap-lg">
-            <!-- Connectivity -->
-            <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-md shadow-level-1 transition-shadow hover:shadow-level-2">
-                <div class="flex items-center gap-xs mb-md border-b border-surface-container pb-sm">
-                    <span class="material-symbols-outlined text-primary">lan</span>
-                    <h3 class="font-headline-lg text-primary m-0" style="font-size:20px;line-height:28px;">Connectivity</h3>
-                </div>
-                <div class="space-y-md">
-                    <div class="flex flex-col gap-xs">
-                        <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider" for="api-url">Local API URL</label>
-                        <input id="api-url" type="text" value=""
-                               class="w-full bg-surface border border-outline-variant rounded px-sm py-[10px] font-body-md text-on-background focus:border-secondary focus:ring-1 focus:ring-secondary focus:outline-none transition-colors" />
-                        <p class="font-body-sm text-on-surface-variant mt-1">The FastAPI backend endpoint. Defaults to this app's origin.</p>
-                    </div>
-                    <div class="flex gap-xs items-center">
-                        <button id="test-conn" class="bg-surface text-primary border border-outline-variant rounded font-label-md text-label-md py-xs px-md hover:bg-surface-container-low transition-colors flex items-center gap-xs">
-                            <span class="material-symbols-outlined text-[18px]">network_check</span>
-                            Test Connection
-                        </button>
-                        <span id="conn-status" class="font-label-sm text-on-surface-variant"></span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Model parameters -->
-            <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-md shadow-level-1 transition-shadow hover:shadow-level-2">
-                <div class="flex items-center gap-xs mb-md border-b border-surface-container pb-sm">
-                    <span class="material-symbols-outlined text-primary">tune</span>
-                    <h3 class="font-headline-lg text-primary m-0" style="font-size:20px;line-height:28px;">Model Parameters</h3>
-                </div>
-                <div class="space-y-lg">
-                    <div class="flex flex-col gap-xs">
-                        <div class="flex justify-between items-center">
-                            <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider" for="top-k">Top-K Retrieval</label>
-                            <span class="font-label-md text-label-md text-primary bg-surface-container py-1 px-3 rounded" id="top-k-val">5</span>
-                        </div>
-                        <input id="top-k" type="range" min="1" max="20" value="5" class="mt-xs" />
-                        <p class="font-body-sm text-on-surface-variant mt-1">How many context chunks to retrieve for each generation. Lower values increase focus.</p>
-                    </div>
-                    <div class="flex flex-col gap-xs">
-                        <div class="flex justify-between items-center">
-                            <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider" for="temperature">Temperature</label>
-                            <span class="font-label-md text-label-md text-primary bg-surface-container py-1 px-3 rounded" id="temperature-val">0.7</span>
-                        </div>
-                        <input id="temperature" type="range" min="0" max="2" step="0.1" value="0.7" class="mt-xs" />
-                        <p class="font-body-sm text-on-surface-variant mt-1">Controls creativity. 0 = highly deterministic; 2 = highly varied.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Bookmarks -->
-            <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-md shadow-level-1">
-                <div class="flex items-center gap-xs mb-md border-b border-surface-container pb-sm justify-between">
-                    <div class="flex items-center gap-xs">
-                        <span class="material-symbols-outlined text-primary">bookmark</span>
-                        <h3 class="font-headline-lg text-primary m-0" style="font-size:20px;line-height:28px;">Bookmarks</h3>
-                    </div>
-                    <button id="bookmarks-refresh" class="text-secondary font-label-sm hover:underline">Refresh</button>
-                </div>
-                <div id="bookmarks-list" class="flex flex-col gap-xs">
-                    <p class="font-body-sm text-on-surface-variant">No bookmarks yet.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Right: storage -->
-        <div class="md:col-span-5 flex flex-col gap-lg">
-            <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-md shadow-level-1">
-                <div class="flex items-center gap-xs mb-md border-b border-surface-container pb-sm">
-                    <span class="material-symbols-outlined text-primary">database</span>
-                    <h3 class="font-headline-lg text-primary m-0" style="font-size:20px;line-height:28px;">Local Storage</h3>
-                </div>
-                <div class="space-y-md">
-                    <div class="flex flex-col gap-xs">
-                        <div class="flex justify-between items-end mb-1">
-                            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Vector Index</span>
-                            <span class="font-label-md text-on-background"><span id="idx-chunks">0</span> chunks</span>
-                        </div>
-                        <div class="h-2 bg-tertiary rounded-full overflow-hidden w-full">
-                            <div id="idx-fill" class="bg-secondary h-full rounded-full" style="width: 0%;"></div>
-                        </div>
-                    </div>
-                    <p class="font-body-sm text-on-surface-variant">Documents and flashcards are stored locally — fully private.</p>
-                    <details class="border border-outline-variant rounded-lg overflow-hidden">
-                        <summary class="flex justify-between items-center p-xs cursor-pointer hover:bg-surface-container-low transition-colors list-none">
-                            <span class="font-label-md text-label-md text-on-surface">Indexed Files (<span id="idx-files-count">0</span>)</span>
-                            <span class="material-symbols-outlined text-on-surface-variant">expand_more</span>
-                        </summary>
-                        <div id="idx-files-list" class="p-xs flex flex-col gap-xs border-t border-outline-variant">
-                            <p class="font-body-sm text-on-surface-variant">Nothing indexed yet.</p>
-                        </div>
-                    </details>
-                    <div class="flex flex-col gap-xs pt-sm">
-                        <button id="manage-files" class="w-full bg-surface border border-primary text-primary rounded font-label-md text-label-md py-[10px] px-sm hover:bg-surface-container-low transition-colors flex items-center justify-center gap-xs">
-                            <span class="material-symbols-outlined text-[18px]">folder_managed</span>
-                            Refresh Indexed Files
-                        </button>
-                        <div class="border-t border-outline-variant my-xs"></div>
-                        <button id="clear-index" class="w-full bg-surface text-error border border-error/30 rounded font-label-md text-label-md py-[10px] px-sm hover:bg-error-container hover:text-on-error-container transition-colors flex items-center justify-center gap-xs">
-                            <span class="material-symbols-outlined text-[18px]">delete_sweep</span>
-                            Clear Knowledge Index
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- About -->
-            <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-md shadow-level-1">
-                <div class="flex items-center gap-xs mb-md border-b border-surface-container pb-sm">
-                    <span class="material-symbols-outlined text-primary">info</span>
-                    <h3 class="font-headline-lg text-primary m-0" style="font-size:20px;line-height:28px;">About</h3>
-                </div>
-                <p class="font-body-md text-on-surface-variant">
-                    <strong>Study Companion AI</strong> v1.2.0 — local-first, RAG-augmented study assistant.
-                </p>
-                <ul class="font-body-sm text-on-surface-variant mt-xs list-disc pl-md space-y-1">
-                    <li>Multi-format ingestion (PDF / DOCX / images / URLs)</li>
-                    <li>Hybrid retrieval (FAISS + BM25)</li>
-                    <li>SM-2 spaced repetition</li>
-                    <li>Anki export</li>
-                </ul>
-                <p class="font-body-sm text-on-surface-variant mt-md">Built with Mistral + Ollama + FAISS + FastAPI.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Global save bar -->
-    <div class="mt-xl flex justify-end gap-sm border-t border-outline-variant pt-lg">
-        <button id="discard-settings" class="text-primary hover:bg-surface-container-low rounded font-label-md text-label-md py-[10px] px-md transition-colors">
-            Discard Changes
-        </button>
-        <button id="save-settings" class="bg-primary text-on-primary rounded font-label-md text-label-md py-[10px] px-xl hover:bg-primary-container transition-colors shadow-sm flex items-center gap-xs">
-            <span class="material-symbols-outlined text-[18px]">save</span>
-            Save Settings
-        </button>
-    </div>
+<body data-page="settings" class="bg-background text-on-background font-body-md text-body-md antialiased min-h-screen selection:bg-secondary-container selection:text-on-background">
+<!-- App Shell Container -->
+<div class="flex h-screen w-full overflow-hidden">
+<!-- SideNavBar -->
+<!-- SC_SIDEBAR_START -->
+<nav class="bg-surface h-screen w-64 fixed left-0 top-0 border-r border-outline-variant flex flex-col py-md px-sm z-50">
+<a href="/" class="flex items-center gap-xs px-xs mb-lg" style="text-decoration:none;">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary font-bold">SC</div>
+<div>
+<h1 class="font-headline-lg text-primary text-[16px] leading-[20px] m-0 font-bold">Study Companion</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant m-0 uppercase tracking-wider">AI Assistant</p>
+</div>
+</a>
+<button class="bg-primary text-on-primary font-label-md text-label-md rounded-lg py-xs px-sm mb-lg flex items-center justify-center gap-xs hover:bg-primary-container transition-colors duration-200 w-full">
+<span class="material-symbols-outlined text-[18px]">upload_file</span>
+Upload Document
+</button>
+<div class="flex-grow flex flex-col gap-base">
+<a class="flex items-center gap-sm px-sm py-[8px] rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors duration-200" href="/"><span class="material-symbols-outlined">book_2</span><span class="font-label-md text-label-md">Study</span></a>
+<a class="flex items-center gap-sm px-sm py-[8px] rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors duration-200" href="/quiz"><span class="material-symbols-outlined">quiz</span><span class="font-label-md text-label-md">Quiz</span></a>
+<a class="flex items-center gap-sm px-sm py-[8px] rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors duration-200" href="/flashcards"><span class="material-symbols-outlined">style</span><span class="font-label-md text-label-md">Flashcards</span></a>
+<a class="flex items-center gap-sm px-sm py-[8px] rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors duration-200" href="/progress-page"><span class="material-symbols-outlined">analytics</span><span class="font-label-md text-label-md">Progress</span></a>
+<a class="flex items-center gap-sm px-sm py-[8px] rounded-lg text-primary font-bold border-r-2 border-primary bg-surface-container-high transition-all" href="/settings"><span class="material-symbols-outlined icon-fill" style="font-variation-settings:'FILL' 1;">settings</span><span class="font-label-md text-label-md">Settings</span></a>
+</div>
+<div class="border-t border-outline-variant pt-sm mt-sm">
+<a class="flex items-center gap-sm px-sm py-[8px] rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors duration-200" href="/progress-page">
+<span class="material-symbols-outlined">monitor_heart</span>
+<span class="font-label-md text-label-md">System Health</span>
+</a>
+</div>
+</nav>
+<!-- SC_SIDEBAR_END -->
+<!-- Content Wrapper -->
+<div class="flex-1 flex flex-col ml-64 w-[calc(100%-16rem)] h-full relative">
+<!-- TopAppBar -->
+<header class="bg-surface text-primary border-b border-outline-variant flex justify-between items-center px-md h-16 w-full sticky top-0 z-40 shrink-0">
+<!-- Brand / Contextual Title (Left) -->
+<div class="flex items-center gap-sm">
+<!-- Search implicitly handled or placed elsewhere based on "on_left" logic, but design system favors minimal top bar. We will keep it clean. -->
+<h1 class="font-headline-lg text-headline-lg font-bold text-primary" style="font-size: 20px; line-height: 28px;">Study Companion AI</h1>
+</div>
+<!-- Actions (Right) -->
+<div class="flex items-center gap-sm">
+<button class="text-primary hover:bg-surface-container-low rounded py-xs px-sm font-label-md text-label-md transition-colors flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                    New Session
+                </button>
+<div class="w-[1px] h-6 bg-outline-variant mx-xs"></div>
+<button class="text-on-surface-variant hover:text-primary hover:bg-surface-container-low p-xs rounded-full transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto bg-background pt-md pb-xl px-margin-desktop">
+<div class="max-w-[1024px] mx-auto w-full">
+<!-- Page Header -->
+<div class="mb-xl">
+<h2 class="font-headline-xl text-headline-xl text-primary mb-xs">Application Settings</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">Configure your local AI environment, adjust model parameters for optimal study generation, and manage your data storage.</p>
+</div>
+<!-- Settings Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-lg">
+<!-- Left Column: Core Settings -->
+<div class="md:col-span-7 flex flex-col gap-lg">
+<!-- Network / Connectivity Card -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-md shadow-[0_2px_4px_rgba(0,32,69,0.05)] transition-shadow hover:shadow-[0_2px_8px_rgba(0,32,69,0.1)]">
+<div class="flex items-center gap-sm mb-md border-b border-surface-container pb-sm">
+<span class="material-symbols-outlined text-primary">lan</span>
+<h3 class="font-headline-lg text-headline-lg text-primary" style="font-size: 20px; line-height: 28px;">Connectivity</h3>
+</div>
+<div class="space-y-sm">
+<div class="flex flex-col gap-xs">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider" for="api-url">Local API URL</label>
+<input class="w-full bg-surface border border-outline-variant rounded px-sm py-[10px] font-body-md text-body-md text-on-background focus:border-secondary focus:ring-1 focus:ring-secondary focus:outline-none transition-colors" id="api-url" type="text" value="http://localhost:8000"/>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">The endpoint where your local Language Model is currently hosted.</p>
+</div>
+<div class="pt-sm">
+<button class="bg-surface text-primary border border-outline-variant rounded font-label-md text-label-md py-xs px-sm hover:bg-surface-container-low transition-colors">
+                                        Test Connection
+                                    </button>
+</div>
+</div>
+</div>
+<!-- Model Parameters Card -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-md shadow-[0_2px_4px_rgba(0,32,69,0.05)] transition-shadow hover:shadow-[0_2px_8px_rgba(0,32,69,0.1)]">
+<div class="flex items-center gap-sm mb-md border-b border-surface-container pb-sm">
+<span class="material-symbols-outlined text-primary">tune</span>
+<h3 class="font-headline-lg text-headline-lg text-primary" style="font-size: 20px; line-height: 28px;">Model Parameters</h3>
+</div>
+<div class="space-y-lg">
+<!-- Top-K Slider -->
+<div class="flex flex-col gap-xs">
+<div class="flex justify-between items-center">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider" for="top-k">Top-K Retrieval</label>
+<span class="font-label-md text-label-md text-primary bg-surface-container py-1 px-3 rounded">40</span>
+</div>
+<input class="w-full mt-2" id="top-k" max="100" min="1" type="range" value="40"/>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Limits the AI to selecting from the top K most likely next tokens. Lower values increase focus and determinism.</p>
+</div>
+<!-- Temperature Slider -->
+<div class="flex flex-col gap-xs">
+<div class="flex justify-between items-center">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider" for="temperature">Temperature</label>
+<span class="font-label-md text-label-md text-primary bg-surface-container py-1 px-3 rounded">0.7</span>
+</div>
+<input class="w-full mt-2" id="temperature" max="2" min="0" step="0.1" type="range" value="0.7"/>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Controls creativity. A value of 0 is highly factual, while higher values introduce more variety into study material generation.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Data & Storage -->
+<div class="md:col-span-5 flex flex-col gap-lg">
+<!-- Storage Management Card -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-md shadow-[0_2px_4px_rgba(0,32,69,0.05)] transition-shadow hover:shadow-[0_2px_8px_rgba(0,32,69,0.1)]">
+<div class="flex items-center gap-sm mb-md border-b border-surface-container pb-sm">
+<span class="material-symbols-outlined text-primary">database</span>
+<h3 class="font-headline-lg text-headline-lg text-primary" style="font-size: 20px; line-height: 28px;">Local Storage</h3>
+</div>
+<div class="space-y-md">
+<!-- Storage Progress -->
+<div class="flex flex-col gap-xs mb-md">
+<div class="flex justify-between items-end mb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Vector Index Usage</span>
+<span class="font-label-md text-label-md text-on-background">0 chunks</span>
+</div>
+<!-- Progress Bar Component (Static) -->
+<div class="h-[8px] bg-tertiary rounded-full overflow-hidden w-full">
+<div class="bg-secondary h-full rounded-full" style="width: 24%;"></div>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Your uploaded documents and generated flashcards are stored locally in a high-performance vector database to ensure absolute privacy and rapid retrieval.</p>
+<div class="flex flex-col gap-sm pt-sm">
+<button class="w-full bg-surface border border-primary text-primary rounded font-label-md text-label-md py-[10px] px-sm hover:bg-surface-container-low transition-colors flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">folder_managed</span>
+                                        Manage Indexed Files
+                                    </button>
+<div class="border-t border-outline-variant my-xs"></div>
+<button class="w-full bg-surface text-error border border-error/30 rounded font-label-md text-label-md py-[10px] px-sm hover:bg-error-container hover:text-on-error-container transition-colors flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">delete_sweep</span>
+                                        Clear Knowledge Index
+                                    </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Global Save Action -->
+<div class="mt-xl flex justify-end gap-sm border-t border-outline-variant pt-lg">
+<button class="text-primary hover:bg-surface-container-low rounded font-label-md text-label-md py-[10px] px-md transition-colors">
+                        Discard Changes
+                    </button>
+<button class="bg-primary text-on-primary rounded font-label-md text-label-md py-[10px] px-xl hover:bg-on-primary-fixed-variant transition-colors shadow-sm">
+                        Save Settings
+                    </button>
+</div>
+</div>
 </main>
-
-<!-- Confirm modal -->
-<div id="confirm-bg" class="sc-modal-bg">
-    <div class="sc-modal">
-        <h3 id="confirm-title">Are you sure?</h3>
-        <p id="confirm-msg" class="font-body-md text-on-surface-variant mb-md"></p>
-        <div class="flex justify-end gap-xs">
-            <button id="confirm-cancel" class="border border-outline-variant text-primary font-label-md py-xs px-md rounded hover:bg-surface-container-low">Cancel</button>
-            <button id="confirm-ok" class="bg-error text-on-error font-label-md py-xs px-md rounded hover:opacity-90">Confirm</button>
-        </div>
-    </div>
+</div>
 </div>
 
-<script src="/static/shell.js"></script>
 <script src="/static/api.js"></script>
+<script src="/static/hooks.js"></script>
 <script src="/static/settings.js"></script>
-</body>
-</html>
+</body></html>
