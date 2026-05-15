@@ -22,4 +22,4 @@ training/eval_report.txt
 .cache/
 *.gguf
 PLAN.md
-.claude
+.claude/
